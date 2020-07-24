@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "movieMarker": {
+    "movie-marker": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -101,7 +101,7 @@
         }
       }
     },
-    "movieMarker-e2e": {
+    "movie-marker-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {

@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-tv-item',
   templateUrl: './tv-item.component.html',
-  styleUrls: ['../list-item.component.css']
+  styleUrls: ['../common/list-item.component.css']
 })
 export class TvItemComponent implements OnInit {
 

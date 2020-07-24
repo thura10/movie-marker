@@ -6,7 +6,7 @@ import { UiService } from "../ui.service";
 @Component({
   selector: 'app-tv-details',
   templateUrl: './tv-details.component.html',
-  styleUrls: ['./tv-details.component.css']
+  styleUrls: ['../common/item-details.component.css']
 })
 export class TvDetailsComponent implements OnInit, OnDestroy {
 
