@@ -1,0 +1,12 @@
+<ngb-carousel class="m-auto" [interval]="0" (slide)="onSlide($event)" style="width: 80%; outline: none;">
+  <ng-template *ngFor="let video of carouselVideos; let i= index;" [id]="i" ngbSlide>
+    <div class="embed-responsive embed-responsive-16by9">
+      <iframe #player class="embed-responsive-item" [src]="'https://www.youtube-nocookie.com/embed/' + video.key + '?enablejsapi=1&controls=0&modestbranding=1' | safe" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </ng-template>
+  <ng-template *ngFor="let image of carouselImages; let i= index;" [id]="i+ carouselVideos.length" ngbSlide>
+    <div class="embed-responsive embed-responsive-16by9">
+      <img style="object-fit: contain; background-color: rgba(0,0,0,0.3);" class="w-100 h-100 embed-responsive-item" [src]="'https://image.tmdb.org/t/p/original' + image.file_path" alt="Backdrop Image">
+    </div>
+  </ng-template>
+</ngb-carousel>

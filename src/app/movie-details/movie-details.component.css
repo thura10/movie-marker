@@ -1,0 +1,47 @@
+@media screen and (min-width: 992px) {
+    img#poster {
+        max-width: 160px;
+        max-height: 240px;
+    }
+}
+#bg {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  
+    display: block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    background-blend-mode: color;
+    background-color: rgba(0,0,0,0.4);
+
+    width: 100%;
+    height: 365px;
+    filter: blur(5px);
+}
+#poster {
+    display: block;
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+    max-width: 130px;
+    max-height: 195px;
+    border-radius: 5px;
+    margin: auto;
+}
+button.item-btn {
+    background-color: rgba(30,30,30,0.6);
+    border-radius: 5px;
+    color: white;
+    border: 2px solid transparent;
+}
+button.item-btn:hover {
+    border-color: rgba(200,200,200,0.2);
+}
+button.item-btn:active {
+    background-color: rgba(70,70,70,0.5)
+}

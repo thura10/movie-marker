@@ -1,1 +1,115 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+    background-color: #202020;
+    overflow-x: hidden;
+}
+body { 
+    margin: 0; 
+    font-family: 'Roboto', sans-serif; 
+}
+.cdk-overlay-container {
+    z-index: 1051 !important;
+}
+
+.font-code {
+    font-family: 'code';
+}
+.color-primary {
+    color: #E54848;
+}
+.color-bg-primary {
+    background-color: #202020;
+}
+.form-control.color-bg-primary {
+    border: 2px solid #404040;
+    border-radius: 5px;
+    padding-left: 2.3rem;
+
+    background-position: 9px 9px;
+    background-position-y: 50%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;    
+}
+.form-control.color-bg-primary:focus {
+    background-color: #202020;
+    border-color: white;
+    box-shadow: none;
+}
+.form-button {
+    border-radius: 6px;
+    background-color: #E54848;
+    font-size: large;
+    margin-left: auto;
+    margin-right: auto;
+}
+.cursor-pointer:hover {
+    cursor: pointer;
+    opacity: 0.8;
+}
+.cursor-pointer:active {
+    opacity: 0.5;
+}
+
+.no-select { 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.modal-holder{
+    animation-name: fade;
+    animation-duration: 0.4s;
+    opacity: 1;
+    animation-timing-function: ease-in;
+}
+@keyframes fade {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+/* GLOBAL BROWSER STYLES */
+.form-control::placeholder {
+    color: white;
+    opacity: 0.8;
+}
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 0.6; /* Firefox */
+}
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+    opacity: 0.6;
+}
+  
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+    opacity: 0.6;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+input:focus {
+    outline: none;
+}
+
+/* CAROUSEL STYLES */
+.carousel-control-prev, .carousel-control-next {
+    height: fit-content;
+    top: 50% !important;
+}
+.carousel-item {
+    display: block !important;
+    z-index: 1;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s;
+    visibility: hidden;
+}
+.carousel-item.active {
+    position: relative;
+    visibility: visible ;
+    opacity: 1;
+}

@@ -1,0 +1,60 @@
+@media screen and (max-width: 767px) {
+    .movieItemText {
+        width: 140px !important;
+    }
+    .movieItem {
+        width: 140px !important;
+        height: 210px !important;
+        min-width: 140px !important;
+        min-height: 210px !important;
+    }
+}
+
+.movieItem {
+    min-height: 270px;
+    min-width: 180px;
+    height: 270px; 
+    width: 180px; 
+    background-size: contain;
+}
+.movieItemSmall {
+    min-height: 180px;
+    min-width: 120px;
+    height: 180px; 
+    width: 120px; 
+    background-size: contain;
+}
+
+.movieItemBar {
+    height: 13%;
+    min-height: 35px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(0,0,0,0.6);
+}
+.movieItemText {
+    text-overflow: ellipsis; 
+    width: 180px; 
+    overflow: hidden;
+}
+
+.movieItem-cursor:hover {
+    background-color: rgba(0,0,0,0.5);
+}
+.movieItem-icon {
+    margin-top: .6rem;
+}
+
+.movieItem-favourite:hover {
+    /* hex: #E54848 */
+    filter: brightness(0) saturate(100%) invert(34%) sepia(84%) saturate(538%) hue-rotate(312deg) brightness(105%) contrast(108%)
+}
+.movieItem-watched:hover {
+    /* hex: #3ec95f */
+    filter: brightness(0) saturate(100%) invert(60%) sepia(99%) saturate(323%) hue-rotate(82deg) brightness(91%) contrast(90%);
+}
+.movieItem-collection:hover {
+    /* hex: #ffc30b */
+    opacity: 1;
+    filter: brightness(0) saturate(100%) invert(74%) sepia(64%) saturate(886%) hue-rotate(351deg) brightness(102%) contrast(101%)
+}

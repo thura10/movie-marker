@@ -1,20 +1,139 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<nav id="navbar" class="navbar navbar-expand-lg fixed-top navbar-dark">
+  <img id="appLogo" class="navbar-brand ml-1 mr-1 no-select" src="../assets/logo.png" width="60">
+  <a style="cursor: default;" class="navbar-brand font-code align-">MOVIE MARKER</a>
 
+  <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
+    <ul class="nav navbar-nav ml-3 mr-auto">
+      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" routerLink="/" routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{exact:true}">
+          <img class="navIcon no-select" src="../assets/nav-dashboard-icon.png">Dashboard
+        </a></li> 
+      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" routerLink="/collections" routerLinkActive="activeNavItem">
+        <img class="navIcon no-select" src="../assets/nav-collection-icon.png">Collections
+      </a></li>
+      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" routerLink="/calendar" routerLinkActive="activeNavItem">
+        <img class="navIcon no-select" src="../assets/nav-calendar-icon.png">Calendar
+      </a></li> 
+      <li><a [class.navItemExpanded]="!isCollapsed" class="navItem nav-link active font-code ml-1" routerLink="/discover" routerLinkActive="activeNavItem">
+        <img class="navIcon no-select" src="../assets/nav-discover-icon.png">Discover
+      </a></li>
+    </ul>
+    <div [ngClass]= "{'mb-3 mt-3 pl-5 pr-5' : !isCollapsed}" ngbDropdown>
+      <button *ngIf="user == ''" (click)= "openModal(loginModal)" [ngClass]= "{'navItemExpanded w-100' : !isCollapsed}" type="button" class="btn btn-secondary nav-button cursor-pointer font-code">
+        Login
+      </button>
+      <button *ngIf="user != ''" [ngClass]= "{'navItemExpanded w-100' : !isCollapsed}" class="btn btn-secondary dropdown-toggle font-code nav-button cursor-pointer" type="button" ngbDropdownToggle>
+        <img class="mr-2 no-select" src="../assets/nav-user-icon.png" width="18">
+        {{user}}
+      </button>
+      <div id="userDropdownMenu" [class.w-100] = "isCollapsed" ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+        <a (click) = "onLogout()" class="dropdown-item text-white" href="#!" ngbDropdownItem>
+          <img class="navIcon no-select" src="../assets/nav-logout-icon.png" width="20">Logout
+        </a>
+        <a class="dropdown-item text-white" href="#!" ngbDropdownItem>
+          <img class="navIcon no-select" src="../assets/nav-settings-icon.png" width="20">Settings
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<ng-template #loginModal let-modal>
+  <div class="modal-header d-flex flex-row justify-content-center color-bg-primary" style="border: none; background-image: url('../assets/dashboardBg.png'); background-size: cover;">
+    <img style="width: 19%; top: -10px; position: absolute;" src="../assets/logo.png">
+    <h3 style="margin-top: 18%; margin-right: -1rem;" class="color-primary font-code ml-auto">Movie Marker</h3>
+    <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
+    <div style="padding: 2rem; padding-bottom: 1rem;" class="modal-body color-bg-primary">
+      <div class="form-group">
+        <input style="background-image: url('../assets/form-user-icon.png');" formControlName="loginUsername" type="text" class="form-control color-bg-primary text-white" placeholder="Username">
+        <div *ngIf="loginForm.controls['loginUsername'].invalid && loginSubmitted">
+          <span *ngIf="loginForm.controls['loginUsername'].errors.required" style="font-size: small;" class="color-primary">Username is required</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <input style="background-image: url('../assets/form-password-icon.png');" formControlName="loginPassword" type="password" class="form-control color-bg-primary text-white" placeholder="Password">
+        <div *ngIf="loginForm.controls['loginPassword'].invalid && loginSubmitted">
+          <span *ngIf="loginForm.controls['loginPassword'].errors.required" style="font-size: small;" class="color-primary">Password is required</span>
+        </div>
+        <div *ngIf="loginError != ''">
+          <span style="font-size: small;" class="color-primary">{{loginError}}</span>
+        </div>
+      </div>
+
+      <div style="border: none;" class="modal-footer color-bg-primary">
+        <button ngbAutoFocus type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="submit">Login</button>
+        <div class="mx-auto mt-2">
+          <button style="border: none; border-radius: 30px; background-color: #3b5998" class="cursor-pointer p-1 mr-2">
+            <img class="p-1 no-select" src="../assets/icon-fb.png" height="35">
+          </button>
+          <button style="border: none; border-radius: 30px;" class="cursor-pointer bg-white p-1 ml-2">
+            <img class="p-1 no-select" src="../assets/icon-google.png" height="35">
+          </button>
+        </div>
+        <hr class="bg-white mt-3 w-100">
+        <button (click)= "modal.close(); openModal(registerModal)" style="background-color: #202020; border: 2px solid white;" type="button" class="btn w-100 mt-3 text-white font-code form-button cursor-pointer" type="button">Register</button>
+      </div>
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #registerModal let-modal>
+  <div class="modal-header d-flex flex-row justify-content-center color-bg-primary" style="border: none; background-image: url('../assets/dashboardBg.png'); background-size: cover;">
+    <img style="width: 19%; top: -10px; position: absolute;" src="../assets/logo.png">
+    <h3 style="margin-top: 18%; margin-right: -1rem;" class="color-primary font-code ml-auto">Movie Marker</h3>
+    <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div style="padding: 2rem; padding-bottom: 1rem;" class="modal-body color-bg-primary">
+    <form [formGroup]="registerForm" novalidate>
+      <div class="form-group">
+        <input style="background-image: url('../assets/form-user-icon.png');" formControlName="registerUsername" type="text" class="form-control color-bg-primary text-white" placeholder="Username">
+        <div *ngIf="registerForm.controls['registerUsername'].invalid && registerSubmitted">
+          <span *ngIf="registerForm.controls['registerUsername'].errors.required" style="font-size: small;" class="color-primary">Username is required</span>
+          <span *ngIf="registerForm.controls['registerUsername'].errors.minlength" style="font-size: small;" class="color-primary">Username must be at least 5 characters</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <input style="background-image: url('../assets/form-user-icon.png');" formControlName="registerEmail" type="text" class="form-control color-bg-primary text-white" placeholder="Email">
+        <div *ngIf="registerForm.controls['registerEmail'].invalid && registerSubmitted">
+          <span *ngIf="registerForm.controls['registerEmail'].errors.required" style="font-size: small;" class="color-primary">Email is required</span>
+          <span *ngIf="registerForm.controls['registerEmail'].errors.email" style="font-size: small;" class="color-primary">Enter a valid email address</span>
+        </div>
+      </div>
+    </form>
+    <form [formGroup]="registerPassword" novalidate>
+      <div class="form-group mt-4">
+        <input style="background-image: url('../assets/form-password-icon.png');" formControlName="password" type="password" class="form-control color-bg-primary text-white" placeholder="Password">
+        <div *ngIf="registerPassword.controls['password'].invalid && registerSubmitted">
+          <span *ngIf="registerPassword.controls['password'].errors.required" style="font-size: small;" class="color-primary">Password is required</span>
+          <span *ngIf="registerPassword.controls['password'].errors.minlength" style="font-size: small;" class="color-primary">Password must be at least 6 characters</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <input style="background-image: url('../assets/form-password-icon.png');" formControlName="password1" type="password" class="form-control color-bg-primary text-white" placeholder="Confirm Password">
+        <div *ngIf="registerPassword.invalid && registerSubmitted">
+          <span *ngIf="registerPassword.errors.notSame" style="font-size: small;" class="color-primary">Enter the same password</span>
+        </div>
+        <div *ngIf="registerError != ''">
+          <span style="font-size: small;" class="color-primary">{{registerError}}</span>
+        </div>
+      </div>
+    </form>
+    <div style="border: none;" class="modal-footer color-bg-primary">
+      <button ngbAutoFocus (click)="onRegister()" type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="button">Register</button>
+      <hr class="bg-white mt-3 w-100">
+      <span style="font-size: small;" class="text-white-50">By clicking on register, you agree to the <u class="cursor-pointer">terms and conditions</u> of the website.</span>
+    </div>
+  </div>
+</ng-template>
+
+<router-outlet></router-outlet>

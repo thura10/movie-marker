@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <path id="Icon_material-collections-bookmark" data-name="Icon material-collections-bookmark" class="cls-1" d="M10.333,12.333h-2v14a2.006,2.006,0,0,0,2,2h14v-2h-14Zm16-4h-12a2.006,2.006,0,0,0-2,2v12a2.006,2.006,0,0,0,2,2h12a2.006,2.006,0,0,0,2-2v-12A2.006,2.006,0,0,0,26.333,8.333Zm0,10-2.5-1.5-2.5,1.5v-8h5v8Z" transform="translate(-8.333 -8.333)"/>
+</svg>

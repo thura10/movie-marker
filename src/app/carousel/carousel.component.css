@@ -1,0 +1,27 @@
+@media screen and (min-width: 992px) {
+    ngb-carousel {
+      width: 75% !important;
+    }
+    iframe {
+      width: 855px;
+      height: 481px;
+    }
+  }
+@media (min-width: 768px) {  
+    iframe {
+        width: 720px;
+        height: 405px;
+      }
+}
+@media (min-width: 576px) {  
+    iframe {
+        width: 576px;
+        height: 324px;
+      }
+}
+@media (max-width: 576px) {  
+    iframe {
+        width: 432px;
+        height: 243px;
+      }
+}

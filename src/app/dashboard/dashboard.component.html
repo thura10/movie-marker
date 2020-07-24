@@ -1,0 +1,79 @@
+<div [class.bgCollapsed] = "searching" class="d-flex flex-column" id="bg">
+  <div class="mb-5" style="margin-top: 125px; width: 100%; z-index: 2;">
+    <div id="searchBar" (click)="searchFocus()">
+      <img style="height: 1.4rem;" class="ml-1 no-select" src="../../assets/search-icon.png">
+      <input #searchText id="searchText" class="font-code text-white ml-md-5" type="text" placeholder="SEARCH">
+    </div>
+  </div>
+  <div #overviewItems *ngIf="!searching" id="overview" class="d-flex">
+    <h2 *ngIf="overviewIndex != 0" style="left: 0;" class="mh-100 m-auto text-white cursor-pointer arrow-pointers" (click) = "scrollOverviewPrev(overviewItems)">&nbsp;&nbsp;&lt;</h2>
+    <div class="p-5 text-white m-auto d-inline-block w-100">
+      <div class="overviewItem">
+        <img class="overviewIcon no-select" src="../../assets/film-icon.png" width="30">
+        <div class="d-inline-block ml-4 overviewText">
+          <span class="text-break"><span>10 days, 5 hours, 5 minutes</span> of watchtime</span><br>
+          <span>115 Movies</span>
+        </div>
+      </div>
+    </div>
+
+    <h2 *ngIf="overviewIndex != 2" style="right: 0;" class="mh-100 m-auto text-white cursor-pointer arrow-pointers" (click) = "scrollOverviewNext(overviewItems)">&gt;&nbsp;&nbsp;</h2>
+    <div class="p-5 text-white m-auto d-inline-block w-100">
+      <div class="overviewItem">
+        <img class="overviewIcon no-select" src="../../assets/tv_icon.png" width="40">
+        <div class="d-inline-block ml-4 overviewText">
+          <span class="text-break"><span>10 days, 5 hours, 5 minutes</span> of watchtime</span><br>
+          <span>1,564 Episodes (25 Shows)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-5 text-white m-auto d-inline-block w-100">
+      <div class="overviewItem">
+        <img class="overviewIcon no-select" src="../../assets/collections-icon.png" width="30" height="30">
+        <div class="d-inline-block ml-4 overviewText">
+          <span><span>1,153 episodes (25 Shows)</span> collected</span><br>
+          <span>214 Movies collected</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--SEARCH RESULT HERE-->
+<div style="background-color: #202020;" *ngIf="searching">
+  <div *ngIf="movieResults.length!= 0" class="pb-1 px-md-5 pt-5 pr-2 pl-4">
+    <p style="font-size: x-large" class="font-code text-white">
+      <img src="../../assets/film-icon.png" width="20" class="mr-4 no-select">{{movieResults.length}} Movie<span *ngIf="movieResults.length > 1">s</span>
+    </p>
+    <div style="overflow-x: auto;" class="d-flex flex-nowrap flex-row w-100">
+      <div *ngFor="let result of movieResults">
+        <app-movie-item [movie]="result" [small]="false"></app-movie-item>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="tvResults.length!= 0" class="pb-1 px-md-5 pt-md-4 pr-2 pl-4">
+    <p style="font-size: x-large" class="font-code text-white">
+      <img src="../../assets/tv_icon.png" width="20" class="mr-4 no-select">{{tvResults.length}} TV Show<span *ngIf="tvResults.length > 1">s</span>
+    </p>
+    <div style="overflow-x: auto;" class="d-flex flex-nowrap flex-row w-100">
+      <div *ngFor="let result of tvResults">
+        <app-tv-item [tv]="result"></app-tv-item>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="actorResults.length!= 0" class="pb-1 px-md-5 pt-md-4 pr-2 pl-4">
+    <p style="font-size: x-large" class="font-code text-white">
+      <img src="../../assets/nav-user-icon.png" width="20" class="mr-4 no-select">{{actorResults.length}} Actor<span *ngIf="actorResults.length > 1">s</span>
+    </p>
+    <div style="overflow-x: auto;" class="d-flex flex-nowrap flex-row w-100">
+      <div *ngFor="let result of actorResults">
+        <app-actor-item [actor]="result" [small]="false"></app-actor-item>
+      </div>
+    </div>
+  </div>
+
+  <span *ngIf="movieResults.length == 0 && tvResults.length == 0 && actorResults.length == 0" style="font-size: 1.4rem; padding-top: 10rem;" class="font-code text-center text-white d-block">No results found</span>
+</div>

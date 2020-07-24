@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26.254" height="20" viewBox="0 0 26.254 20">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+    </style>
+  </defs>
+  <path id="Icon_ionic-ios-checkmark" data-name="Icon ionic-ios-checkmark" class="cls-1" d="M55.1,36.247l-2.146-2.2a.463.463,0,0,0-.341-.146h0a.444.444,0,0,0-.341.146L37.4,48.958l-5.413-5.385a.473.473,0,0,0-.683,0l-2.17,2.159a.481.481,0,0,0,0,.691l6.828,6.792a2.164,2.164,0,0,0,1.426.691,2.267,2.267,0,0,0,1.414-.667h.012l16.3-16.3A.516.516,0,0,0,55.1,36.247Z" transform="translate(-28.984 -33.906)"/>
+</svg>
