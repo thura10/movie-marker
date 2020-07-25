@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {HttpModule} from '@angular/http'
 import { HttpClientModule } from '@angular/common/http';
 import { OverlayModule } from "@angular/cdk/overlay";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -21,7 +22,7 @@ import { MovieItemComponent } from './movie-item/movie-item.component';
 import { TvItemComponent } from './tv-item/tv-item.component';
 import { ActorItemComponent } from './actor-item/actor-item.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
-import { TvDetailsComponent } from './tv-details/tv-details.component';
+import { TvDetailsComponent, ScrollToDirective } from './tv-details/tv-details.component';
 import { CarouselComponent, SafePipe } from './carousel/carousel.component';
 
 @NgModule({
@@ -41,7 +42,8 @@ import { CarouselComponent, SafePipe } from './carousel/carousel.component';
     SpinnerComponent,
     TvDetailsComponent,
     CarouselComponent,
-    SafePipe
+    SafePipe,
+    ScrollToDirective
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import { CarouselComponent, SafePipe } from './carousel/carousel.component';
     HttpModule,
     HttpClientModule,
     routing,
-    OverlayModule
+    OverlayModule,
+    BrowserAnimationsModule,
   ],
   providers: [TmdbService, UserService, UiService],
   bootstrap: [AppComponent]

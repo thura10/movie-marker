@@ -19,4 +19,7 @@ export class TmdbService {
   getTvDetails(id: string) {
     return this.http.get<any[]>(`./api/tv/${id}`)  
   }
+  getSeasonDetails(tvId: string, seasonNumber: string) {
+    return this.http.get<any[]>(`./api/tv/${tvId}/season/${seasonNumber}`)
+  }
 }

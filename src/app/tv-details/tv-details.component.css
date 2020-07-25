@@ -1,0 +1,42 @@
+@media screen and (max-width: 767px) {
+    .season-poster, .season-text {
+        width: 130px !important;
+    }
+    .season-poster {
+        height: 195px !important;
+    }
+    .episode-poster, .episode-text {
+        width: 152px !important;
+    }
+    .episode-poster {
+        height: 110px !important;
+    }
+}
+
+.season-poster {
+    background-size: cover, 80px;
+    background-blend-mode: color, normal;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 5px;
+    height: 240px; 
+}
+.season-poster, .season-text {
+    width: 160px; 
+}
+.season-poster.selected-season {
+    background-color: rgba(0,0,0,0.7);
+}
+
+.episode-poster {
+    border-radius: 5px;
+    object-fit: cover;
+    height: 180px;
+}
+.episode-poster, .episode-text {
+    width: 250px;
+}
+.episode-text, .season-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

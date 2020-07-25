@@ -126,9 +126,23 @@ router.get('/collection/:id', (req, res) => {
 
 router.get('/tv/:id', (req, res) => {
     let str = addPathToUrl(base_url, ["tv", req.params.id]);
-    let params = setParams({"append_to_response": "credits,videos,similar,recommendations,images", "include_image_language": "en,null"}).toString();
+    let params = setParams({"append_to_response": "credits,similar,recommendations", "include_image_language": "en,null"}).toString();
 
-    let url = `${str}?${this.param}`
+    let url = `${str}?${params}`
+    axios.get(url)
+    .then(result => {
+        res.status(200).json(result.data)
+    })
+    .catch(error => {
+        res.status(500).send(error)
+    })
+})
+
+router.get('/tv/:tvId/season/:seasonNumber', (req, res) => {
+    let str = addPathToUrl(base_url, ["tv", req.params.tvId, 'season', req.params.seasonNumber]);
+    let params = setParams({}).toString();
+
+    let url = `${str}?${params}`
     axios.get(url)
     .then(result => {
         res.status(200).json(result.data)

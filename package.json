@@ -30,6 +30,7 @@
     "express": "^4.17.1",
     "mongodb": "^3.5.9",
     "rxjs": "~6.2.0",
+    "scroll-into-view": "^1.14.2",
     "smoothscroll-polyfill": "^0.4.4",
     "zone.js": "~0.8.26"
   },

@@ -53,6 +53,8 @@ import 'core-js/es7/reflect';
  **/
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 import smoothscroll from 'smoothscroll-polyfill';
+
+// kick off the polyfill!
 smoothscroll.polyfill();
 
 /**
