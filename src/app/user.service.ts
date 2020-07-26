@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class UserService {
   setToken(_id: string) {
     localStorage.setItem("_id", _id)
   }
-  private getToken() {
+  getToken() {
     return localStorage.getItem("_id")
   }
   setSession(username: string) {
@@ -35,5 +35,30 @@ export class UserService {
   }
   getSession() {
     return sessionStorage.getItem("session_user");
+  }
+
+  getCollections() {
+    return this.http.get<any[]>(`./api/user/collection/${this.getToken()}`)
+  }
+  getSharedCollections() {
+    return this.http.get<any[]>(`./api/user/collection/${this.getToken()}/shared`)
+  }
+  newCollection(name: string, owner: string, ownerId: string) {
+    return this.http.post<any>('./api/user/collection/new', {"name": name, "owner": owner, "ownerId": ownerId});
+  }
+  checkUser(username: string) {
+    return this.http.get<any>(`./api/user/check/${username}`)
+  }
+  getCollectionPermission(_id: string) {
+    return this.http.get<any>(`./api/user/collection/${_id}/permission`)
+  }
+  saveCollectionPermission(_id: string, permissions: string[]) {
+    return this.http.put<any>(`./api/user/collection/${_id}/permission`, {'permissions': permissions, 'userId': this.getToken()});
+  }
+  deleteCollection(_id: string) {
+    return this.http.delete<any>(`./api/user/collection/delete`, {params: new HttpParams().set("userId", this.getToken()).set("_id", _id)})
+  }
+  editCollection(_id: string, name: string) {
+    return this.http.put<any>(`./api/user/collection/edit`, {'_id': _id, 'userId': this.getToken(), 'name': name});
   }
 }

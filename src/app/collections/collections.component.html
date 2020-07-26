@@ -1,3 +1,61 @@
-<p>
-  collections works!
-</p>
+<div style="margin-top: 100px;" class="container">
+  <div class="row">
+    <div class="col-12">
+      <h4 class="font-code text-white">My Collections
+        <i (click)="openModal(addCollectionModal)" class="far fa-plus-square ml-2 cursor-pointer"></i>
+      </h4>
+      <p class="my-4 ml-4 text-center text-white" *ngIf="!collections.length">Create some collections and start curating your favourite movies</p>
+      <div [ngStyle]="{'flex-wrap': sharedCollections.length ? 'nowrap' : 'wrap'}" class="d-flex overflow-x-auto">
+        <div *ngFor="let collection of collections">
+          <app-collection-item (collectionAction)="collectionItemAction($event)" [collection]= "collection"></app-collection-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="sharedCollections.length" class="row">
+    <div class="col-12">
+      <h4 class="font-code text-white">Shared with me</h4>
+      <div class="d-flex flex-nowrap overflow-x-auto">
+        <div *ngFor="let collection of sharedCollections">
+          <app-collection-item (collectionAction)="collectionItemAction($event)" [collection]= "collection"></app-collection-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #addCollectionModal let-modal>
+  <div class="modal-header color-bg-primary" style="border: none">
+    <h4 class="font-code text-white mt-3">Add a collection</h4>
+    <button type="button" class="close text-white p-0 m-0 mt-3" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>  
+  </div>
+  <div class="container color-bg-primary">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        <div style="margin: auto; width: fit-content;" class="ml-sm-2">
+          <img style="border-radius: 8px" width="140" height="210" src="../../assets/examplePoster.jpg">
+          <div style="width: 140px; overflow-x: hidden;" class="text-white text-nowrap text-center mt-2 mb-3 mr-4">
+            <span style="font-size: large; font-weight: 500;">{{addCollectionName.value ? addCollectionName.value : 'Name' }}</span><br>
+            <p style="font-size: 14px; font-weight: 300;">By {{userService.getSession()}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <div class="form-group ml-sm-4 mt-sm-4">
+          <input style="background-image: url('../assets/movieItem-collection.svg'); padding-left: 2.5rem;" [formControl] = "addCollectionName" type="text" class="form-control color-bg-primary text-white" placeholder="Name">
+          <div *ngIf="addCollectionName.invalid && addCollectionSubmitted">
+            <span *ngIf="addCollectionName.errors.required" style="font-size: small;" class="color-primary">Collection name is required</span>
+            <span *ngIf="addCollectionName.errors.pattern" style="font-size: small;" class="color-primary">Collection name can only be alphanumeric characters</span>
+          </div>
+        </div>
+        <div class="ml-sm-4 mt-sm-5">
+          <button (click)="createCollection(addCollectionModal)" type="button" class="btn form-button font-code text-white cursor-pointer w-100 mb-5">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-collection-edit *ngIf="collectionEdit" [id]="collectionEditId" [name]="collectionEditName" [mode]="collectionEditMode" (editDone)="editDone($event)"></app-collection-edit>

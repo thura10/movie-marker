@@ -1,0 +1,95 @@
+<ng-template #shareCollectionModal let-modal>
+  <div class="modal-header color-bg-primary" style="border: none">
+    <h4 class="font-code text-white mt-3">Share your collection</h4>
+    <button type="button" class="close text-white p-0 m-0 mt-3" aria-label="Close" (click)="modal.dismiss();">
+      <span aria-hidden="true">&times;</span>
+    </button>  
+  </div>
+  <div class="container color-bg-primary">
+    <div class="row">
+      <div class="col-12">
+        <div class="input-group mx-4">
+          <input (keyup)="shareError = ''" (keyup.enter)="addPermission()" style="background-image: url('../assets/form-user-icon.png'); padding-left: 2.5rem;" [formControl] = "shareUsername" type="text" class="form-control color-bg-primary text-white" placeholder="Enter username">
+          <div class="input-group-append">
+            <button (click)="addPermission()" style="background-color: #E54848; border-color: #E54848;" class="btn btn-secondary cursor-pointer font-code mr-5" type="button">Add</button>
+          </div>
+        </div>
+        <div *ngIf="(shareUsername.invalid && shareSubmitted) || shareError">
+          <span *ngIf="shareUsername.invalid && shareUsername.errors.required" style="font-size: small;" class="color-primary ml-5">Username is required</span>
+          <span *ngIf="shareError" style="font-size: small;" class="color-primary ml-5">{{shareError}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div style="height: 260px; overflow-y: auto;" class="mx-4 mt-2 mb-2">
+          <p class="text-white-50 text-center">Add friends to share your collection with</p>
+          <table class="table table-striped text-white">
+            <tbody>
+            <tr *ngFor= "let user of permissions">
+              <td class="share-table-data">
+                {{user}}
+                <i (click) = "removePermission(user)" class="far fa-times-circle float-right cursor-pointer mt-1"></i>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="mx-4">
+          <button (click)="savePermission()" type="button" class="btn form-button font-code text-white cursor-pointer w-100 mb-4">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #deleteCollectionModal let-modal>
+  <div class="modal-header color-bg-primary" style="border: none">
+    <p style="font-size: 1.2rem; " class="text-white">Do you want to delete '{{name}}' from your list of collections?</p>
+    <button type="button" class="close text-white p-0 m-0 mt-1" aria-label="Close" (click)="modal.dismiss();">
+      <span aria-hidden="true">&times;</span>
+    </button>  
+  </div>
+  <div class="modal-body color-bg-primary pt-0" style="border: none;">
+    <button (click)="modal.dismiss();" style="background-color: #404040;" type="button" class="btn form-button font-code text-white cursor-pointer d-inline-block float-right mr-0">Cancel</button>
+    <button (click)="deleteCollection()" type="button" class="btn form-button font-code text-white cursor-pointer d-inline-block float-right mr-3">Delete</button>
+  </div>
+</ng-template>
+
+<ng-template #editCollectionModal let-modal>
+  <div class="modal-header color-bg-primary" style="border: none">
+    <h4 class="font-code text-white mt-3">Edit your collection</h4>
+    <button type="button" class="close text-white p-0 m-0 mt-3" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>  
+  </div>
+  <div class="container color-bg-primary">
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        <div style="margin: auto; width: fit-content;" class="ml-sm-2">
+          <img style="border-radius: 8px" width="140" height="210" src="../../assets/examplePoster.jpg">
+          <div style="width: 140px; overflow-x: hidden;" class="text-white text-nowrap text-center mt-2 mb-3 mr-4">
+            <span style="font-size: large; font-weight: 500;">{{editCollectionName.value ? editCollectionName.value : 'Name' }}</span><br>
+            <p style="font-size: 14px; font-weight: 300;">By {{userService.getSession()}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <div class="form-group ml-sm-4 mt-sm-4">
+          <input style="background-image: url('../assets/movieItem-collection.svg'); padding-left: 2.5rem;" [formControl] = "editCollectionName" type="text" class="form-control color-bg-primary text-white" placeholder="Name">
+          <div *ngIf="editCollectionName.invalid && editCollectionSubmitted">
+            <span *ngIf="editCollectionName.errors.required" style="font-size: small;" class="color-primary">Collection name is required</span>
+            <span *ngIf="editCollectionName.errors.pattern" style="font-size: small;" class="color-primary">Collection name can only be alphanumeric characters</span>
+          </div>
+        </div>
+        <div class="ml-sm-4 mt-sm-5">
+          <button (click)="editCollection()" type="button" class="btn form-button font-code text-white cursor-pointer w-100 mb-5">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -57,7 +57,8 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "movieMarker:build:production"
+              "browserTarget": "movieMarker:build:production",
+              "proxyConfig": "proxy.config.json"
             }
           }
         },

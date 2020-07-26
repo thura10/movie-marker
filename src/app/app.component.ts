@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {UserService} from './user.service';
-import { FormBuilder, FormGroup, Form, Validators} from '@angular/forms'
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { UiService } from './ui.service';
 
 @Component({
@@ -14,7 +13,7 @@ import { UiService } from './ui.service';
 export class AppComponent implements OnInit {
   isCollapsed = true
   title = 'Movie Marker';
-  constructor(private modal: NgbModal, private fb: FormBuilder, private userService: UserService, private ui: UiService ,private router: Router) {}
+  constructor(private modal: NgbModal, private fb: FormBuilder, private userService: UserService, private ui: UiService) {}
 
   user: string = '';
   loginForm: FormGroup;
@@ -56,7 +55,6 @@ export class AppComponent implements OnInit {
   }
 
   onAuth() {
-    this.ui.showSpinner();
     this.userService.authUser().subscribe(result => {
       if (result[0].auth) {
         this.userService.setSession(result[0].username);
@@ -65,7 +63,6 @@ export class AppComponent implements OnInit {
       else {
         this.user = ''
       }
-      this.ui.stopSpinner();
     })
   }
 

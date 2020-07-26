@@ -55,6 +55,5 @@
 }
 .movieItem-collection:hover {
     /* hex: #ffc30b */
-    opacity: 1;
     filter: brightness(0) saturate(100%) invert(74%) sepia(64%) saturate(886%) hue-rotate(351deg) brightness(102%) contrast(101%)
 }

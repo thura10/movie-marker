@@ -24,6 +24,8 @@ import { ActorItemComponent } from './actor-item/actor-item.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { TvDetailsComponent, ScrollToDirective } from './tv-details/tv-details.component';
 import { CarouselComponent, SafePipe } from './carousel/carousel.component';
+import { CollectionItemComponent } from './collection-item/collection-item.component';
+import { CollectionEditComponent } from './collection-edit/collection-edit.component';
 
 @NgModule({
   entryComponents: [
@@ -43,7 +45,9 @@ import { CarouselComponent, SafePipe } from './carousel/carousel.component';
     TvDetailsComponent,
     CarouselComponent,
     SafePipe,
-    ScrollToDirective
+    ScrollToDirective,
+    CollectionItemComponent,
+    CollectionEditComponent
   ],
   imports: [
     BrowserModule,

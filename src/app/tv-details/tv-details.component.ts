@@ -5,6 +5,7 @@ import { UiService } from "../ui.service";
 
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import 'scroll-into-view';
+import { NullTemplateVisitor } from '@angular/compiler';
 
 @Directive({ selector: '[scrollTo]'})
 export class ScrollToDirective implements AfterViewInit {
@@ -60,6 +61,7 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
 
   selectedSeason: number = null;
   season: any = {};
+  hoveredSeasonNumber: number = null;
 
   constructor(private route: ActivatedRoute, private ui: UiService, private tmdb: TmdbService) { }
   ngOnInit() {
@@ -67,6 +69,8 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
       this.ui.showSpinner();
       this.selectedSeason = null;
       this.season = {};
+      this.hoveredSeasonNumber = null;
+      
       let id = params['id'];
       this.tmdb.getTvDetails(id).subscribe(result => {
         this.tv = result;
@@ -128,5 +132,8 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
         this.ui.stopSpinner();
       })
     }
+  }
+  seasonMouseHover(seasonNo: number) {
+    this.hoveredSeasonNumber = seasonNo;
   }
 }

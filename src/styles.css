@@ -15,6 +15,9 @@ body {
 .font-code {
     font-family: 'code';
 }
+.overflow-x-auto {
+    overflow-x: auto;
+}
 .color-primary {
     color: #E54848;
 }
@@ -92,7 +95,7 @@ body {
     width: 0px;  /* Remove scrollbar space */
     background: transparent;  /* Optional: just make scrollbar invisible */
 }
-input:focus {
+input:focus, button:focus, div:focus, a:focus {
     outline: none;
 }
 

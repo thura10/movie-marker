@@ -30,10 +30,10 @@
         {{user}}
       </button>
       <div id="userDropdownMenu" [class.w-100] = "isCollapsed" ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-        <a (click) = "onLogout()" class="dropdown-item text-white" href="#!" ngbDropdownItem>
+        <a (click) = "onLogout()" class="dropdown-item text-white" ngbDropdownItem>
           <img class="navIcon no-select" src="../assets/nav-logout-icon.png" width="20">Logout
         </a>
-        <a class="dropdown-item text-white" href="#!" ngbDropdownItem>
+        <a class="dropdown-item text-white" ngbDropdownItem>
           <img class="navIcon no-select" src="../assets/nav-settings-icon.png" width="20">Settings
         </a>
       </div>
@@ -52,7 +52,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
     <div style="padding: 2rem; padding-bottom: 1rem;" class="modal-body color-bg-primary">
       <div class="form-group">
-        <input style="background-image: url('../assets/form-user-icon.png');" formControlName="loginUsername" type="text" class="form-control color-bg-primary text-white" placeholder="Username">
+        <input ngbAutoFocus style="background-image: url('../assets/form-user-icon.png');" formControlName="loginUsername" type="text" class="form-control color-bg-primary text-white" placeholder="Username">
         <div *ngIf="loginForm.controls['loginUsername'].invalid && loginSubmitted">
           <span *ngIf="loginForm.controls['loginUsername'].errors.required" style="font-size: small;" class="color-primary">Username is required</span>
         </div>
@@ -69,7 +69,7 @@
       </div>
 
       <div style="border: none;" class="modal-footer color-bg-primary">
-        <button ngbAutoFocus type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="submit">Login</button>
+        <button type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="submit">Login</button>
         <div class="mx-auto mt-2">
           <button style="border: none; border-radius: 30px; background-color: #3b5998" class="cursor-pointer p-1 mr-2">
             <img class="p-1 no-select" src="../assets/icon-fb.png" height="35">
@@ -96,7 +96,7 @@
   <div style="padding: 2rem; padding-bottom: 1rem;" class="modal-body color-bg-primary">
     <form [formGroup]="registerForm" novalidate>
       <div class="form-group">
-        <input style="background-image: url('../assets/form-user-icon.png');" formControlName="registerUsername" type="text" class="form-control color-bg-primary text-white" placeholder="Username">
+        <input ngbAutoFocus style="background-image: url('../assets/form-user-icon.png');" formControlName="registerUsername" type="text" class="form-control color-bg-primary text-white" placeholder="Username">
         <div *ngIf="registerForm.controls['registerUsername'].invalid && registerSubmitted">
           <span *ngIf="registerForm.controls['registerUsername'].errors.required" style="font-size: small;" class="color-primary">Username is required</span>
           <span *ngIf="registerForm.controls['registerUsername'].errors.minlength" style="font-size: small;" class="color-primary">Username must be at least 5 characters</span>
@@ -129,7 +129,7 @@
       </div>
     </form>
     <div style="border: none;" class="modal-footer color-bg-primary">
-      <button ngbAutoFocus (click)="onRegister()" type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="button">Register</button>
+      <button (click)="onRegister()" type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="button">Register</button>
       <hr class="bg-white mt-3 w-100">
       <span style="font-size: small;" class="text-white-50">By clicking on register, you agree to the <u class="cursor-pointer">terms and conditions</u> of the website.</span>
     </div>
