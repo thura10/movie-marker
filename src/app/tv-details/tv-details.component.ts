@@ -5,7 +5,6 @@ import { UiService } from "../ui.service";
 
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import 'scroll-into-view';
-import { NullTemplateVisitor } from '@angular/compiler';
 
 @Directive({ selector: '[scrollTo]'})
 export class ScrollToDirective implements AfterViewInit {

@@ -8,6 +8,7 @@ import {DiscoverComponent} from './discover/discover.component'
 import { AppComponent } from './app.component';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { TvDetailsComponent } from './tv-details/tv-details.component';
+import { ListComponent } from './list/list.component';
 
 const appRoutes: Routes = [
     {path: 'calendar', component: CalendarComponent},
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
     {path: 'discover', component: DiscoverComponent},
     {path: 'movie/:id', component: MovieDetailsComponent},
     {path: 'tv/:id', component: TvDetailsComponent},
+    {path: 'list/:type/:id', component: ListComponent},
     {path: '', component: DashboardComponent, pathMatch: 'full'},
 ]
 

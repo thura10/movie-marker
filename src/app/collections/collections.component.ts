@@ -42,11 +42,9 @@ export class CollectionsComponent implements OnInit {
     this.addCollectionSubmitted = true;
 
     let name = this.addCollectionName.value;
-    let owner = this.userService.getSession();
-    let ownerId = this.userService.getToken();
-    if (name && owner && ownerId && this.addCollectionName.valid) {
+    if (name && this.addCollectionName.valid) {
       this.ui.showSpinner();
-      this.userService.newCollection(name, owner, ownerId).subscribe(result => {
+      this.userService.newCollection(name).subscribe(result => {
         if (result) {
           this.ui.stopSpinner();
           this.addCollectionSubmitted = false;
@@ -54,6 +52,7 @@ export class CollectionsComponent implements OnInit {
           this.collectionEdit = true;
           this.collectionEditId = result._id;
           this.collectionEditMode = 'share';
+          this.addCollectionName.reset();
         }
       })  
     }

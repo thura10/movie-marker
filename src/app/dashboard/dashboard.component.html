@@ -47,7 +47,7 @@
       <img src="../../assets/film-icon.png" width="20" class="mr-4 no-select">{{movieResults.length}} Movie<span *ngIf="movieResults.length > 1">s</span>
     </p>
     <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
-      <div *ngFor="let result of movieResults">
+      <div class="mr-4" *ngFor="let result of movieResults">
         <app-movie-item [movie]="result" [small]="false"></app-movie-item>
       </div>
     </div>
@@ -58,7 +58,7 @@
       <img src="../../assets/tv_icon.png" width="20" class="mr-4 no-select">{{tvResults.length}} TV Show<span *ngIf="tvResults.length > 1">s</span>
     </p>
     <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
-      <div *ngFor="let result of tvResults">
+      <div class="mr-4" *ngFor="let result of tvResults">
         <app-tv-item [tv]="result"></app-tv-item>
       </div>
     </div>

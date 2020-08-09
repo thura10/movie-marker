@@ -2,6 +2,7 @@
   "name": "movie-marker",
   "version": "0.0.0",
   "scripts": {
+    "backend": "node server.js",
     "debug": "ng serve",
     "build": "ng build && node server.js",
     "test": "ng test",

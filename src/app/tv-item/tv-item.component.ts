@@ -7,10 +7,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TvItemComponent implements OnInit {
 
-  @Input() tv: any
+  @Input() tv: any;
+
+  addingToCollection: boolean;
 
   constructor() { }
   ngOnInit() {
+  }
+
+  addFinished() {
+    this.addingToCollection = false;
   }
 
   getPoster(poster: string) {

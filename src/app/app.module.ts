@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbCollapseModule, NgbDropdownModule, NgbModalModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbCollapseModule, NgbDropdownModule, NgbModalModule, NgbCarouselModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap'
 
 import {routing} from './app.routing'
 import {TmdbService} from './tmdb.service'
@@ -26,6 +26,8 @@ import { TvDetailsComponent, ScrollToDirective } from './tv-details/tv-details.c
 import { CarouselComponent, SafePipe } from './carousel/carousel.component';
 import { CollectionItemComponent } from './collection-item/collection-item.component';
 import { CollectionEditComponent } from './collection-edit/collection-edit.component';
+import { CollectionAddComponent } from './collection-add/collection-add.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   entryComponents: [
@@ -47,7 +49,9 @@ import { CollectionEditComponent } from './collection-edit/collection-edit.compo
     SafePipe,
     ScrollToDirective,
     CollectionItemComponent,
-    CollectionEditComponent
+    CollectionEditComponent,
+    CollectionAddComponent,
+    ListComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +60,7 @@ import { CollectionEditComponent } from './collection-edit/collection-edit.compo
     NgbModalModule,
     NgbCarouselModule,
     ReactiveFormsModule,
+    NgbPaginationModule,
     HttpModule,
     HttpClientModule,
     routing,

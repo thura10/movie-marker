@@ -56,7 +56,7 @@
     <div class="col-12">
       <h3 class="font-code">More from {{collection.name}}</h3>
       <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
-        <div *ngFor="let movie of collection.parts">
+        <div class="mr-4" *ngFor="let movie of collection.parts">
           <app-movie-item [movie]="movie" [small]="false"></app-movie-item>
         </div>
       </div>
@@ -67,7 +67,7 @@
     <div class="col-12">
       <h3 class="font-code">Similar to {{movie.title}}</h3>
       <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
-        <div *ngFor="let movie of movie.similar.results.slice(0,20)">
+        <div class="mr-4" *ngFor="let movie of movie.similar.results.slice(0,20)">
           <app-movie-item [movie]="movie" [small]="false"></app-movie-item>
         </div>
       </div>
@@ -78,7 +78,7 @@
     <div class="col-12">
       <h3 class="font-code">You might also like...</h3>
       <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
-        <div *ngFor="let movie of movie.recommendations.results.slice(0,20)">
+        <div class="mr-4" *ngFor="let movie of movie.recommendations.results.slice(0,20)">
           <app-movie-item [movie]="movie" [small]="false"></app-movie-item>
         </div>
       </div>

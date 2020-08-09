@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-collection-item',
   templateUrl: './collection-item.component.html',
-  styleUrls: ['../common/list-item.component.css']
+  styleUrls: ['../common/list-item.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CollectionItemComponent implements OnInit {
 
@@ -18,12 +19,13 @@ export class CollectionItemComponent implements OnInit {
     this.collectionAction.emit({'_id': id, 'action': action, 'name': name})
   }
 
-  getPoster(poster: string) {
-    if (poster) {
-      return "https://image.tmdb.org/t/p/w500" + poster
+  getCollectionPoster(items: any[]) {
+    let item = items[Math.floor(Math.random() * items.length)];
+    if (items.length != 0 && item.poster_path) {
+      return "https://image.tmdb.org/t/p/w500" + item.poster_path;
     }
     else {
-      return "../../assets/defaultPoster.png"
+      return "../../assets/examplePoster.jpg"
     }
   }
 }

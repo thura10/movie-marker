@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 html, body {
-    background-color: #202020;
+    background-color: #202020 !important;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
@@ -116,4 +116,32 @@ input:focus, button:focus, div:focus, a:focus {
     position: relative;
     visibility: visible ;
     opacity: 1;
+}
+
+/*PAGINATION STYLES*/
+.pagination {
+    width: fit-content;
+    margin: auto;
+    margin-bottom: 2rem;
+}
+.page-item.active .page-link {
+    background-color: #eb4444ff !important;
+    color: white;
+    border-color: #eb4444ff;
+    cursor: default;
+}
+.page-item .page-link {
+    background-color: #202020;
+    border-color: #404040;
+    color: #E54848;
+}
+.page-item:hover .page-link {
+    background-color: #e54848ad;
+    border-color: transparent;
+    color: #202020;
+}
+.page-item.disabled .page-link {
+    background-color: #202020;
+    border-color: #404040;
+    color: #606060;
 }

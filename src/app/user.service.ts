@@ -43,8 +43,8 @@ export class UserService {
   getSharedCollections() {
     return this.http.get<any[]>(`./api/user/collection/${this.getToken()}/shared`)
   }
-  newCollection(name: string, owner: string, ownerId: string) {
-    return this.http.post<any>('./api/user/collection/new', {"name": name, "owner": owner, "ownerId": ownerId});
+  newCollection(name: string) {
+    return this.http.post<any>('./api/user/collection/new', {"name": name, "owner": this.getSession(), "ownerId": this.getToken()});
   }
   checkUser(username: string) {
     return this.http.get<any>(`./api/user/check/${username}`)
@@ -60,5 +60,22 @@ export class UserService {
   }
   editCollection(_id: string, name: string) {
     return this.http.put<any>(`./api/user/collection/edit`, {'_id': _id, 'userId': this.getToken(), 'name': name});
+  }
+  getCollection(_id: string) {
+    return this.http.get<any>('./api/user/collection', {params: new HttpParams().set("userId", this.getToken()).set("_id", _id)})
+  }
+
+  addCollectionItem(type: string, itemId: string, poster: string, name: string, collectionId: string) {
+    return this.http.post<any>(`./api/user/collection/add`, {
+      '_id': collectionId,
+      'userId': this.getToken(),
+      'itemId': itemId,
+      'name': name,
+      'type': type,
+      'poster': poster
+    });
+  }
+  removeCollectionItem(_id: string, itemId: string, type: string) {
+    return this.http.put<any>(`./api/user/collection/remove`, {'_id': _id, 'itemId': itemId, 'type': type, 'userId': this.getToken()});
   }
 }

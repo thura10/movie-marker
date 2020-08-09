@@ -10,8 +10,14 @@ export class MovieItemComponent implements OnInit {
   @Input() movie: any;
   @Input() small: boolean;
 
+  addingToCollection: boolean;
+
   constructor() { }
   ngOnInit() {
+  }
+
+  addFinished() {
+    this.addingToCollection = false;
   }
 
   getPoster(poster: string) {

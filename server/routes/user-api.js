@@ -135,6 +135,19 @@ router.route('/collection/:userId/shared').get((req, res) => {
         }
     })
 })
+router.route('/collection').get((req, res) => {
+    db.collection('collections').findOne({_id: ObjectId(req.query._id)}, (err, result) => {
+        if (err) console.log(err);
+        if (result && result.owner_id == req.query.userId) {
+            res.send(result);
+            return;
+        }
+        result.owner_id = '';
+        result.permissions = [];
+        res.send(result)
+    })
+})
+
 router.route('/collection/delete').delete((req, res) => {
     db.collection('collections').findOne({_id: ObjectId(req.query._id)}, (err, result) => {
         if (err) return console.log(err);
@@ -165,6 +178,30 @@ router.route('/collection/edit').put((req, res) => {
     db.collection('collections').updateOne({'_id': ObjectId(req.body._id), 'owner_id': ObjectId(req.body.userId)}, {$set: {'name': req.body.name}} ,(err, result) => {
         if (err) return console.log(err);
         res.send(result)
+    })
+})
+router.route('/collection/add').post((req, res) => {
+    let item = {
+        'type': req.body.type,
+        'id': req.body.itemId,
+        'poster_path': req.body.poster
+    };
+
+    req.body.type=='movie' ? item.title = req.body.name : item.name = req.body.name;
+
+    db.collection('collections').updateOne({'_id': ObjectId(req.body._id), 'owner_id': ObjectId(req.body.userId)}, {$addToSet: {'items': item}}, (err, result) => {
+        if (err) return console.log(err);
+        if (result) {
+            res.send({'add': true});
+            return;
+        }
+        res.send({'add': false});
+    })
+})
+router.route('/collection/remove').put((req, res) => {
+    db.collection('collections').updateOne({'_id': ObjectId(req.body._id), 'owner_id': ObjectId(req.body.userId)}, {$pull: {"items": {'id': req.body.itemId, 'type': req.body.type}} }, { multi : true}, (err, result) => {
+        if (err) return console.log(err);
+        res.send({"remove": true});
     })
 })
 

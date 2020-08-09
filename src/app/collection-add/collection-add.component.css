@@ -1,0 +1,12 @@
+.collection-poster {
+    width: 120px;
+    height: 180px;
+    border-radius: 8px;
+    background-size: contain, 60px;
+    background-blend-mode: color, normal;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.collection-poster.collection-added {
+    background-color: rgba(0,0,0,0.7);
+}
