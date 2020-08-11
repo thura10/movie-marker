@@ -126,9 +126,10 @@ input:focus, button:focus, div:focus, a:focus {
 }
 .page-item.active .page-link {
     background-color: #eb4444ff !important;
-    color: white;
+    color: white !important;
     border-color: #eb4444ff;
     cursor: default;
+    opacity: 1;
 }
 .page-item .page-link {
     background-color: #202020;
@@ -136,11 +137,13 @@ input:focus, button:focus, div:focus, a:focus {
     color: #E54848;
 }
 .page-item:hover .page-link {
-    background-color: #e54848ad;
-    border-color: transparent;
-    color: #202020;
+    background-color: #303030;
+    border-color: #404040;
+    color: #E54848;
+    opacity: .7;
 }
 .page-item.disabled .page-link {
+    opacity: 1;
     background-color: #202020;
     border-color: #404040;
     color: #606060;

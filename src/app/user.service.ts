@@ -78,4 +78,41 @@ export class UserService {
   removeCollectionItem(_id: string, itemId: string, type: string) {
     return this.http.put<any>(`./api/user/collection/remove`, {'_id': _id, 'itemId': itemId, 'type': type, 'userId': this.getToken()});
   }
+
+  getWatched() {
+    return this.http.get<any[]>(`./api/user/watched/${this.getToken()}`)
+  }
+  getFavourite() {
+    return this.http.get<any[]>(`./api/user/favourite/${this.getToken()}`)
+  }
+  
+  addWatchedItem(type: string, itemId: string, poster: string, name: string) {
+    return this.http.post<any>(`./api/user/watched/${this.getToken()}/add`, {
+      'type': type,
+      'name': name,
+      'poster': poster,
+      'itemId': itemId
+    })
+  }
+  addFavouriteItem(type: string, itemId: string, poster: string, name: string) {
+    return this.http.post<any>(`./api/user/favourite/${this.getToken()}/add`, {
+      'type': type,
+      'name': name,
+      'poster': poster,
+      'itemId': itemId
+    })
+  }
+
+  removeWatchedItem(type: string, itemId: string) {
+    return this.http.put<any>(`./api/user/watched/${this.getToken()}/remove`, {
+      'type': type,
+      'itemId': itemId,
+    })
+  }
+  removeFavouriteItem(type: string, itemId: string) {
+    return this.http.put<any>(`./api/user/favourite/${this.getToken()}/remove`, {
+      'type': type,
+      'itemId': itemId,
+    })
+  }
 }

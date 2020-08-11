@@ -4,6 +4,7 @@ import { UiService } from "../ui.service";
 
 import {fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, filter } from 'rxjs/operators';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,16 +18,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   tvResults: any = [];
   actorResults: any = [];
 
+  watched: any[] = [];
+  favourite: any[] = [];
+
   @ViewChild("searchText") searchText: ElementRef;
 
-  constructor(private tmdb: TmdbService, private ui: UiService) { }
-  ngOnInit() {}
+  constructor(private tmdb: TmdbService, private ui: UiService, private userService: UserService) { }
+  ngOnInit() {
+    //get data for watched and favourite
+    this.dataChanged();
+  }
 
   ngAfterViewInit() {
     fromEvent(this.searchText.nativeElement,'keyup')
             .pipe(
                 filter(Boolean),
-                debounceTime(1000),
+                debounceTime(500),
                 distinctUntilChanged(),
                 tap((text) => {
                   const term = this.searchText.nativeElement.value;
@@ -77,5 +84,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     overviewItems.style.overflowX = "auto";
     items[this.overviewIndex].scrollIntoView({behavior: "smooth"});
     overviewItems.style.overflowX = "hidden";
+  }
+
+  dataChanged() {
+    this.userService.getWatched().subscribe(res => {
+      this.watched = res;
+    })
+    this.userService.getFavourite().subscribe(res => {
+      this.favourite = res;
+    })
   }
 }

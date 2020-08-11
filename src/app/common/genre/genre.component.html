@@ -1,0 +1,8 @@
+<div style="margin-top: 110px;" class="container">
+  <div class="row">
+    <div class="col">
+      <h4 class="font-code text-white ml-4">{{genre}}</h4>
+    </div>
+  </div>
+  <app-lazy-list *ngIf="list.length" [list]="list" [query]="query" [collectionSize]="collectionSize" (pageChanged)="pageChanged($event)"></app-lazy-list>
+</div>

@@ -4,8 +4,7 @@
       <h4 class="font-code text-white">My Collections
         <i (click)="openModal(addCollectionModal)" class="far fa-plus-square ml-2 cursor-pointer"></i>
       </h4>
-      <p class="my-4 ml-4 text-center text-white" *ngIf="!collections.length">Create some collections and start curating your favourite movies</p>
-      <div [ngStyle]="{'flex-wrap': sharedCollections.length ? 'nowrap' : 'wrap'}" class="d-flex overflow-x-auto">
+      <div [ngStyle]="{'flex-wrap': sharedCollections.length ? 'nowrap' : 'wrap'}" [class.justify-content-around]="!sharedCollections.length" class="d-flex overflow-x-auto justify-content-md-start">
         <div *ngFor="let collection of collections">
           <app-collection-item (collectionAction)="collectionItemAction($event)" [collection]= "collection"></app-collection-item>
         </div>
@@ -15,7 +14,7 @@
   <div *ngIf="sharedCollections.length" class="row">
     <div class="col-12">
       <h4 class="font-code text-white">Shared with me</h4>
-      <div class="d-flex flex-nowrap overflow-x-auto">
+      <div [ngStyle]="{'flex-wrap': collections.length ? 'nowrap' : 'wrap'}" [class.justify-content-around]="!collections.length" class="d-flex flex-nowrap overflow-x-auto">
         <div *ngFor="let collection of sharedCollections">
           <app-collection-item (collectionAction)="collectionItemAction($event)" [collection]= "collection"></app-collection-item>
         </div>

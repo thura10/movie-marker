@@ -76,6 +76,47 @@ router.get('/tv/:tvId/season/:seasonNumber', (req, res) => {
     })
 })
 
+router.get('/actor/:id', (req, res) => {
+    let str = addPathToUrl(base_url, ["person", req.params.id]);
+    let params = setParams({"append_to_response": "combined_credits"}).toString();
+
+    let url = `${str}?${params}`
+    axios.get(url)
+    .then(result => {
+        res.status(200).json(result.data);
+    })
+    .catch(err => {
+        res.status(500).send(err);
+    })
+})
+router.get('/genre/:type/:id/:page', (req, res) => {
+    let str = addPathToUrl(base_url, ["discover", req.params.type]);
+    let params = setParams({"sort_by": "popularity.desc", "with_genres": req.params.id, "page": req.params.page});
+
+    let url = `${str}?${params}`
+    axios.get(url)
+    .then(result => {
+        res.status(200).json(result.data);
+    })
+    .catch(err => {
+        res.status(500).send(err);
+    })
+})
+router.get('/genres/:type/list/', (req, res) => {
+    let str = addPathToUrl(base_url, ["genre", req.params.type, "list"]);
+    let params = setParams({}).toString();
+
+    let url = `${str}?${params}`
+    axios.get(url)
+    .then(result => {
+        res.status(200).json(result.data);
+    })
+    .catch(err => {
+        res.status(500).send(err);
+    })
+
+})
+
 function setParams(obj) {
     const params = new URLSearchParams();
     params.set("api_key", API_KEY);

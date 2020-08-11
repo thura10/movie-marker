@@ -1,0 +1,95 @@
+<div *ngIf="movie" [ngStyle]= "{'backgroundImage': 'url('+ getBackdrop(movie.backdrop_path) +')'}" id="bg"></div>
+<div *ngIf="movie" style="margin-top: 110px;" class="container text-white">
+  <div class="row justify-content-between mb-5">
+    <div class="col-lg-3 col-12 mt-1 pr-0 d-flex flex-column order-first">
+      <img id="poster" src="{{getPoster(movie.poster_path)}}">
+    </div>
+    <div style="font-size: 0.9rem; margin-top: 2rem;" class="col-lg-6 col-12 text-white order-lg-2 order-3">
+      <h3 style="font-size: 1.5rem;" class="text-nowrap">{{movie.title}}<span class="text-white-50 font-weight-light" *ngIf="movie.release_date">&nbsp;({{movie.release_date.slice(0,4)}})</span></h3>
+      <div class="text-white-50">
+        <span *ngIf="movie.genres.length">Genres:
+          <span *ngFor="let genre of movie.genres; index as i;" class="text-white"> 
+            <span [routerLink]="['/genre/movie', genre.id]" class="cursor-pointer">{{genre.name}}</span>
+            <span *ngIf="i != movie.genres.length-1"> • </span>
+          </span><br>
+        </span>
+        <span *ngIf="movie.release_date">Released:<span class="text-white"> {{movie.release_date}}</span><br></span>
+        <span *ngIf="movie.runtime">Runtime:<span class="text-white"> {{movie.runtime}} min</span><br></span>
+        <span *ngIf="movie.spoken_languages.length">Language:<span class="text-white"> {{getInfo(movie.spoken_languages)}}</span><br></span>
+        <span *ngIf="movie.credits && getDirectors(movie.credits.crew).length">Director:<span class="text-white"> {{getInfo(getDirectors(movie.credits.crew))}}</span><br></span>
+      </div>
+      <p style="font-size: large;" class="mt-3 mb-0 font-code">{{movie.tagline}}</p>
+    </div>
+    <div class="col-lg-3 col-12 mt-lg-4 mt-2 order-lg-3 order-2">
+      <div style="width: fit-content;" class="m-auto text-white">
+        <button (click)="addFavourite()" [class.isFavourite]="isFavourite" class="btn font-code item-favourite-btn item-btn mt-0 mt-lg-3 mx-2">
+          <i class="fas fa-heart"></i><span class="d-none d-lg-inline-block">&nbsp;&nbsp;Favourite</span>
+        </button>
+        <button (click)="addWatched()" [class.isWatched]="isWatched" class="btn font-code item-watched-btn item-btn mt-0 mt-lg-3 mx-2">
+          <i class="fas fa-check"></i><span class="d-none d-lg-inline-block">&nbsp;&nbsp;Watched</span>
+        </button>
+        <button (click)="addingToCollection = true" class="btn font-code item-collection-btn item-btn mt-0 mt-lg-3 mx-2">
+          <i class="fas fa-plus"></i><span class="d-none d-lg-inline-block">&nbsp;&nbsp;Collection</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="movie.overview" class="row mb-4">
+    <div class="col-12">
+      <h3 class="font-code">About</h3>
+      <p class="mt-3">{{movie.overview}}</p>
+    </div>
+  </div>
+
+  <div *ngIf="movie" class="row mb-4">
+    <app-carousel class="w-100" [videos]= "movie.videos.results" [images]= "movie.images.backdrops"></app-carousel>
+  </div>
+
+  <div *ngIf="movie.credits && movie.credits.cast.length" class="row mt-4">
+    <div class="col-12">
+      <h3 class="font-code">Cast</h3>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
+        <div *ngFor="let actor of movie.credits.cast">
+          <app-actor-item [actor]="actor" [small]="true"></app-actor-item>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="collection && collection.parts.length" class="row mb-4">
+    <div class="col-12">
+      <h3 class="font-code">More from {{collection.name}}</h3>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
+        <div class="mr-4" *ngFor="let movie of collection.parts">
+          <app-movie-item [movie]="movie" [small]="false" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-movie-item>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="movie.similar && movie.similar.results.length" class="row mb-4">
+    <div class="col-12">
+      <h3 class="font-code">Similar to {{movie.title}}</h3>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
+        <div class="mr-4" *ngFor="let movie of movie.similar.results.slice(0,20)">
+          <app-movie-item [movie]="movie" [small]="false" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-movie-item>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="movie.recommendations && movie.recommendations.results.length" class="row mb-4">
+    <div class="col-12">
+      <h3 class="font-code">You might also like...</h3>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
+        <div class="mr-4" *ngFor="let movie of movie.recommendations.results.slice(0,20)">
+          <app-movie-item [movie]="movie" [small]="false" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-movie-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<app-collection-add *ngIf="addingToCollection" [item]="movie" [type]="'movie'" (done)="addFinished($event)"></app-collection-add>

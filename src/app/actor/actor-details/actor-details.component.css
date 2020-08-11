@@ -1,0 +1,22 @@
+input.search {
+    width: 100%;
+    background-color: #404040;
+    border-radius: 30px;
+    border: 0;
+    height: 40px;
+    padding-left: 3.5rem;
+    color: white;
+
+    background-image: url('../../../assets/search-icon.png');
+    background-repeat: no-repeat;
+    background-size: 19px;
+    background-position: 18px 11px;
+}
+
+.profile img {
+    width: 50px;
+    border-radius: 10px;
+}
+.profile span {
+    font-size: 1.5rem;
+}

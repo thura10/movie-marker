@@ -1,0 +1,12 @@
+<div @list class="row">
+  <div @items *ngFor="let item of list" class="col-6 col-sm-4 col-lg-3">
+    <app-movie-item *ngIf="item.type === 'movie' || item.title" [movie]="item" [small]="false" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-movie-item>
+    <app-tv-item *ngIf="item.type === 'tv' || item.name" [tv]="item" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-tv-item>  
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <ngb-pagination (pageChange)="pageChange($event)" [(page)]="page" [pageSize]="20" [collectionSize]="collectionSize" [rotate]="true" [ellipses]="true" [maxSize]="5"></ngb-pagination>
+  </div>
+</div>

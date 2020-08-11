@@ -23,11 +23,26 @@ export class CollectionsComponent implements OnInit {
   collectionEditMode: string;
   collectionEditName: string;
 
+  watched: any[] = [];
+
   ngOnInit() {
     this.addCollectionName.setValidators([Validators.required, Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')]);
     this.ui.showSpinner();
     this.userService.getCollections().subscribe(result => {
       this.collections = result;
+      this.collections.unshift({
+        name: 'Favourites',
+        items: [{poster_path: '/iiZZdoQBEYBv6id8su7ImL0oCbD.jpg'}],
+        owner: this.userService.getSession(),
+        _id: 'favourite',
+        special: true,
+      }, {
+        name: 'Watched',
+        items: [{poster_path: '/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg'}],
+        owner: this.userService.getSession(),
+        _id: 'watched',
+        special: true
+      })
     })
     this.userService.getSharedCollections().subscribe(result => {
       this.sharedCollections = result;

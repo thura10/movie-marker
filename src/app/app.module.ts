@@ -18,16 +18,20 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { DiscoverComponent } from './discover/discover.component';
-import { MovieItemComponent } from './movie-item/movie-item.component';
-import { TvItemComponent } from './tv-item/tv-item.component';
-import { ActorItemComponent } from './actor-item/actor-item.component';
-import { MovieDetailsComponent } from './movie-details/movie-details.component';
-import { TvDetailsComponent, ScrollToDirective } from './tv-details/tv-details.component';
-import { CarouselComponent, SafePipe } from './carousel/carousel.component';
-import { CollectionItemComponent } from './collection-item/collection-item.component';
-import { CollectionEditComponent } from './collection-edit/collection-edit.component';
-import { CollectionAddComponent } from './collection-add/collection-add.component';
-import { ListComponent } from './list/list.component';
+import { MovieItemComponent } from './movie/movie-item/movie-item.component';
+import { TvItemComponent } from './tv/tv-item/tv-item.component';
+import { ActorItemComponent } from './actor/actor-item/actor-item.component';
+import { MovieDetailsComponent } from './movie/movie-details/movie-details.component';
+import { TvDetailsComponent, ScrollToDirective } from './tv/tv-details/tv-details.component';
+import { CarouselComponent, SafePipe } from './common/carousel/carousel.component';
+import { CollectionItemComponent } from './collections/collection-item/collection-item.component';
+import { CollectionEditComponent } from './collections/collection-edit/collection-edit.component';
+import { CollectionAddComponent } from './collections/collection-add/collection-add.component';
+import { ListComponent } from './common/list/list.component';
+import { CollectionDetailsComponent } from './collections/collection-details/collection-details.component';
+import { ActorDetailsComponent } from './actor/actor-details/actor-details.component';
+import { GenreComponent } from './common/genre/genre.component';
+import { LazyListComponent } from './common/lazy-list/lazy-list.component';
 
 @NgModule({
   entryComponents: [
@@ -51,7 +55,11 @@ import { ListComponent } from './list/list.component';
     CollectionItemComponent,
     CollectionEditComponent,
     CollectionAddComponent,
-    ListComponent
+    ListComponent,
+    CollectionDetailsComponent,
+    ActorDetailsComponent,
+    GenreComponent,
+    LazyListComponent
   ],
   imports: [
     BrowserModule,

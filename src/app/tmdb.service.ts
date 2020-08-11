@@ -22,4 +22,14 @@ export class TmdbService {
   getSeasonDetails(tvId: string, seasonNumber: string) {
     return this.http.get<any[]>(`./api/tmdb/tv/${tvId}/season/${seasonNumber}`)
   }
+
+  getActorDetails(id: string) {
+    return this.http.get<any>(`./api/tmdb/actor/${id}`)
+  }
+  getGenreItems(id: string, type: string, page: number) {
+    return this.http.get<any>(`./api/tmdb/genre/${type}/${id}/${page}`)
+  }
+  getGenreList(type: string) {
+    return this.http.get<any>(`./api/tmdb/genres/${type}/list`)
+  } 
 }

@@ -57,3 +57,10 @@
     /* hex: #ffc30b */
     filter: brightness(0) saturate(100%) invert(74%) sepia(64%) saturate(886%) hue-rotate(351deg) brightness(102%) contrast(101%)
 }
+
+.isFavourite {
+    filter: brightness(0) saturate(100%) invert(35%) sepia(99%) saturate(2779%) hue-rotate(338deg) brightness(97%) contrast(84%);
+}
+.isWatched {
+    filter: brightness(0) saturate(100%) invert(70%) sepia(46%) saturate(636%) hue-rotate(80deg) brightness(87%) contrast(90%);
+}

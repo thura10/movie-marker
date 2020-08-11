@@ -1,0 +1,9 @@
+<div [ngClass]= "{'my-3 mr-4 movieItem' : !small, 'mr-4 mt-4 movieItemSmall': small}" [ngStyle]= "{'backgroundImage': 'url('+ getPoster(actor.profile_path) +')'}">
+  <div [routerLink]="['/actor', actor.id]" title="{{actor.name}}" class="w-100 cursor-pointer movieItem-cursor" style="height: 100%;"></div>
+</div>
+<div [routerLink]="['/actor', actor.id]" [ngStyle]="{ 'width' : small ? '120px' : '180px' }" class="movieItemText text-white text-nowrap text-center my-3 mr-4">
+  <span title="{{actor.name}}" class="cursor-pointer" [ngStyle]="{ 'font-size' : small ? 'medium' : 'large' }" style="font-weight: 500;">{{actor.name}}</span><br>
+  <p *ngIf="actor.character" class="mt-1 text-white-50 cursor-pointer" style="font-size: 13px; font-weight: 300;">
+    {{actor.character}}
+  </p>
+</div>

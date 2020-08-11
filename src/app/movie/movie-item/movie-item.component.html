@@ -1,0 +1,18 @@
+<div class="my-3 mx-auto movieItem" [ngStyle]= "{'backgroundImage': 'url('+ getPoster(movie.poster_path) +')'}">
+  <div title="{{movie.title}}" [routerLink]="['/movie', movie.id]" class="w-100 cursor-pointer movieItem-cursor" style="height: 87%;"></div>
+  <div class="movieItemBar w-100 mt-auto d-flex flex-nowrap flex-row justify-content-around">
+    <img (click)="addWatched()" [class.isWatched]="isWatched" class="movieItem-watched movieItem-icon cursor-pointer" src="../../../assets/movieItem-watched.svg" width="19" height="16">
+    <img (click)="addFavourite()" [class.isFavourite]="isFavourite" class="movieItem-favourite movieItem-icon cursor-pointer" src="../../../assets/movieItem-favourite.svg" width="16" height="16">
+    <img (click)="addingToCollection = true" class="movieItem-collection movieItem-icon cursor-pointer" src="../../../assets/movieItem-collection.svg" width="16" height="16">
+  </div>
+</div>
+<div [routerLink]="['/movie', movie.id]" class="movieItemText text-white text-nowrap text-center mx-auto my-3">
+  <span title="{{movie.title}}" class="cursor-pointer" style="font-size: large; font-weight: 500;">{{movie.title}}</span><br>
+  <p class="mt-1 cursor-pointer" style="font-size: 14px; font-weight: 300;">
+    <span *ngIf="movie.release_date && movie.release_date != ''">{{movie.release_date.slice(0,4)}}<span *ngIf="movie.vote_average && movie.vote_average != 0.0">&nbsp;&nbsp;•&nbsp;&nbsp;</span></span>
+    <img *ngIf="movie.vote_average && movie.vote_average != 0.0" style="vertical-align: text-top;" src="../../../assets/star.png" width="15">
+    <span *ngIf="movie.vote_average && movie.vote_average != 0.0">&nbsp;{{movie.vote_average}}</span>
+  </p>
+</div>
+
+<app-collection-add *ngIf="addingToCollection" [item]="movie" [type]="'movie'" (done)="addFinished($event)"></app-collection-add>

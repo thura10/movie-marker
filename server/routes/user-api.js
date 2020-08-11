@@ -205,4 +205,71 @@ router.route('/collection/remove').put((req, res) => {
     })
 })
 
+router.route('/watched/:userId').get((req, res) => {
+    db.collection('users').findOne({'_id': ObjectId(req.params.userId)}, (err, result) => {
+        if (err) return console.log(err);
+        if (result && result.watched) {
+            res.send(result.watched)
+        }
+        else res.send([]);
+    })
+})
+router.route('/favourite/:userId').get((req, res) => {
+    db.collection('users').findOne({'_id': ObjectId(req.params.userId)}, (err, result) => {
+        if (err) return console.log(err);
+        if (result && result.favourite) {
+            res.send(result.favourite)
+        }
+        else res.send([]);
+    })
+})
+
+router.route('/watched/:userId/add').post((req, res) => {
+    let item = {
+        'type': req.body.type,
+        'id': req.body.itemId,
+        'poster_path': req.body.poster
+    };
+    req.body.type=='movie' ? item.title = req.body.name : item.name = req.body.name;
+
+    db.collection('users').updateOne({'_id': ObjectId(req.params.userId)}, {$addToSet: {'watched': item}}, (err, result) => {
+        if (err) return console.log(err);
+        if (result) {
+            res.send({'add': true});
+            return;
+        }
+        res.send({'add': false})
+    })
+})
+router.route('/favourite/:userId/add').post((req, res) => {
+    let item = {
+        'type': req.body.type,
+        'id': req.body.itemId,
+        'poster_path': req.body.poster
+    };
+    req.body.type=='movie' ? item.title = req.body.name : item.name = req.body.name;
+
+    db.collection('users').updateOne({'_id': ObjectId(req.params.userId)}, {$addToSet: {'favourite': item}}, (err, result) => {
+        if (err) return console.log(err);
+        if (result) {
+            res.send({'add': true});
+            return;
+        }
+        res.send({'add': false})
+    })
+})
+
+router.route('/watched/:userId/remove').put((req, res) => {
+    db.collection('users').updateOne({'_id': ObjectId(req.params.userId)}, {$pull: {"watched": {'id': req.body.itemId, 'type': req.body.type}} }, { multi : true}, (err, result) => {
+        if (err) return console.log(err);
+        res.send({"remove": true});
+    })
+})
+router.route('/favourite/:userId/remove').put((req, res) => {
+    db.collection('users').updateOne({'_id': ObjectId(req.params.userId)}, {$pull: {"favourite": {'id': req.body.itemId, 'type': req.body.type}} }, { multi : true}, (err, result) => {
+        if (err) return console.log(err);
+        res.send({"remove": true});
+    })
+})
+
 module.exports = router

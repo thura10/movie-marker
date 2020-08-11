@@ -45,3 +45,16 @@ button.item-btn:hover {
 button.item-btn:active {
     background-color: rgba(70,70,70,0.5)
 }
+
+.isFavourite {
+    background-color: #E54848 !important;
+}
+.isFavourite:hover {
+    background-color: #e54848be !important;
+}
+.isWatched {
+    background-color: #49c667 !important;
+}
+.isWatched:hover {
+    background-color: #49c666b7 !important;
+}

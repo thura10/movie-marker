@@ -1,0 +1,12 @@
+<div *ngIf="actor" style="margin-top: 110px;" class="container">
+  <div class="row">
+    <div class="col-7 profile">
+      <img class="profile ml-3" [src]="getPoster(actor.profile_path)">
+      <span class="font-code text-white ml-4">{{actor.name}}</span>
+    </div>
+    <div class="col-5 d-flex align-items-center">
+      <input [formControl]="search" class="search mr-4" type="text" placeholder="Search...">
+    </div>
+  </div>
+  <app-list [list]="list" [query]="query"></app-list>
+</div>

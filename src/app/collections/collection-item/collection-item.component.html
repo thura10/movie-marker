@@ -1,0 +1,12 @@
+<div class="mt-3 mb-2 mr-4 movieItem" [ngStyle]= "{'backgroundImage': 'url('+ getCollectionPoster(collection.items) +')'}">
+  <div title="{{collection.name}}" [routerLink]="['/collections', collection._id]" class="w-100 cursor-pointer movieItem-cursor" [ngStyle]="{'height': collection.special ? '100%' : '87%'}"></div>
+  <div *ngIf="!collection.special" class="movieItemBar w-100 m-auto d-flex flex-nowrap flex-row justify-content-around text-white">
+    <i (click) = "performCollectionAction(collection._id, 'edit', collection.name)" *ngIf="collection.permissions" class="fas fa-pen m-auto movieItem-watched movieItem-icon cursor-pointer"></i>
+    <i (click) = "performCollectionAction(collection._id, 'share', collection.name)" *ngIf="collection.permissions" class="fas fa-share-alt m-auto movieItem-collection movieItem-icon cursor-pointer"></i>
+    <i (click) = "performCollectionAction(collection._id, 'delete', collection.name)" class="far fa-trash-alt m-auto movieItem-favourite movieItem-icon cursor-pointer"></i>  
+  </div>
+</div>
+<div [routerLink]="['/collections', collection._id]" class="movieItemText text-white text-nowrap text-center mt-1 mb-3 mr-4">
+  <span title="{{collection.name}}" class="cursor-pointer" style="font-size: large; font-weight: 500;">{{collection.name}}</span><br>
+  <p class="cursor-pointer" style="font-size: 14px; font-weight: 300;">By {{collection.owner}}</p>
+</div>
