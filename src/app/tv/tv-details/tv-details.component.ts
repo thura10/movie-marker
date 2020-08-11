@@ -74,11 +74,10 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
       let id = params['id'];
       this.tmdb.getTvDetails(id).subscribe(result => {
         this.tv = result;
-        this.dataChanged();
+        this.dataChanged('');
         this.ui.stopSpinner();
       })
     });
-    this.dataChanged();
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -149,56 +148,66 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
   isWatched: boolean;
   isFavourite: boolean;
 
-  dataChanged() {
-    this.userService.getWatched().subscribe(res => {
-      this.watched = res;
-      this.isWatched = this.watched.some((item) => {
-        return item.id === this.tv.id;
-      })
-
-    })
-    this.userService.getFavourite().subscribe(res => {
-      this.favourite = res;
-      this.isFavourite = this.favourite.some((item) => {
-        return item.id === this.tv.id;
-      })
-    })
+  dataChanged(event) {
+    switch (event) {
+      case 'watched':
+        this.userService.getWatched().subscribe(res => {
+          this.watched = res;
+          this.isWatched = this.watched.some((item) => {
+            return item.id === this.tv.id;
+          })
+        })
+        break;
+      case 'favourite':
+        this.userService.getFavourite().subscribe(res => {
+          this.favourite = res;
+          this.isFavourite = this.favourite.some((item) => {
+            return item.id === this.tv.id;
+          })
+        });
+        break;
+      default:
+        this.userService.getWatched().subscribe(res => {
+          this.watched = res;
+          this.isWatched = this.watched.some((item) => {
+            return item.id === this.tv.id;
+          })
+        });
+        this.userService.getFavourite().subscribe(res => {
+          this.favourite = res;
+          this.isFavourite = this.favourite.some((item) => {
+            return item.id === this.tv.id;
+          })
+        });
+    }
   }
 
   addWatched() {
     if (this.isWatched) {
       this.userService.removeWatchedItem('tv', this.tv.id).subscribe(res => {
-        if (res.remove){
-          this.isWatched = false;
-          this.dataChanged();  
-        }
+        this.dataChanged('watched');  
       })
+      this.isWatched = false;
     }
     else {
       this.userService.addWatchedItem('tv', this.tv.id, this.tv.poster_path, this.tv.name).subscribe(res => {
-        if (res.add) {
-          this.isWatched = true;
-          this.dataChanged();
-        }
+        this.dataChanged('watched');        
       })
+      this.isWatched = true;
     }
   }
   addFavourite() {
     if (this.isFavourite) {
       this.userService.removeFavouriteItem('tv', this.tv.id).subscribe(res => {
-        if (res.remove) {
-          this.isFavourite = false;
-          this.dataChanged();
-        }
+        this.dataChanged('favourite');
       })
+      this.isFavourite = false;
     }
     else {
       this.userService.addFavouriteItem('tv', this.tv.id, this.tv.poster_path, this.tv.name).subscribe(res => {
-        if (res.add) {
-          this.isFavourite = true;
-          this.dataChanged();
-        }
+        this.dataChanged('favourite');
       })
+      this.isFavourite = true;
     }
   }
 

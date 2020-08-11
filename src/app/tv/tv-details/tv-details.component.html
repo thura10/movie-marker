@@ -30,11 +30,11 @@
     </div>
     <div class="col-lg-3 col-12 mt-lg-4 mt-2 order-lg-3 order-2">
       <div style="width: fit-content;" class="m-auto text-white">
-        <button (click)="addFavourite()" [class.isFavourite]="isFavourite" class="btn font-code item-favourite-btn item-btn mt-0 mt-lg-3 mx-2">
-          <i class="fas fa-heart"></i><span class="d-none d-lg-inline-block">&nbsp;&nbsp;Favourite</span>
-        </button>
         <button (click)="addWatched()" [class.isWatched]="isWatched" class="btn font-code item-watched-btn item-btn mt-0 mt-lg-3 mx-2">
           <i class="fas fa-check"></i><span class="d-none d-lg-inline-block">&nbsp;&nbsp;Watched</span>
+        </button>
+        <button (click)="addFavourite()" [class.isFavourite]="isFavourite" class="btn font-code item-favourite-btn item-btn mt-0 mt-lg-3 mx-2">
+          <i class="fas fa-heart"></i><span class="d-none d-lg-inline-block">&nbsp;&nbsp;Favourite</span>
         </button>
         <button (click)="addingToCollection = true" class="btn font-code item-collection-btn item-btn mt-0 mt-lg-3 mx-2">
           <i class="fas fa-plus"></i><span class="d-none d-lg-inline-block">&nbsp;&nbsp;Collection</span>

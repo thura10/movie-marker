@@ -29,7 +29,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       let id = params['id'];
       this.tmdb.getMovieDetails(id).subscribe(result => {
         this.movie = result;
-        this.dataChanged();
+        this.dataChanged('');
         if (this.movie.belongs_to_collection) {
           this.tmdb.getCollection(this.movie.belongs_to_collection.id).subscribe(result => {
             this.collection = result;
@@ -79,54 +79,65 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     return directors
   }
 
-  dataChanged() {
-    this.userService.getWatched().subscribe(res => {
-      this.watched = res;
-      this.isWatched = this.watched.some((item) => {
-        return item.id === this.movie.id;
-      })
-    })
-    this.userService.getFavourite().subscribe(res => {
-      this.favourite = res;
-      this.isFavourite = this.favourite.some((item) => {
-        return item.id === this.movie.id;
-      })
-    })
+  dataChanged(event) {
+    switch (event) {
+      case 'watched':
+        this.userService.getWatched().subscribe(res => {
+          this.watched = res;
+          this.isWatched = this.watched.some((item) => {
+            return item.id === this.movie.id;
+          })
+        })
+        break;
+      case 'favourite':
+        this.userService.getFavourite().subscribe(res => {
+          this.favourite = res;
+          this.isFavourite = this.favourite.some((item) => {
+            return item.id === this.movie.id;
+          })
+        });
+        break;
+      default:
+        this.userService.getWatched().subscribe(res => {
+          this.watched = res;
+          this.isWatched = this.watched.some((item) => {
+            return item.id === this.movie.id;
+          })
+        });
+        this.userService.getFavourite().subscribe(res => {
+          this.favourite = res;
+          this.isFavourite = this.favourite.some((item) => {
+            return item.id === this.movie.id;
+          })
+        });
+    }
   }
   addWatched() {
     if (this.isWatched) {
       this.userService.removeWatchedItem('movie', this.movie.id).subscribe(res => {
-        if (res.remove){
-          this.isWatched = false;
-          this.dataChanged();  
-        }
+        this.dataChanged('watched');  
       })
+      this.isWatched = false;
     }
     else {
       this.userService.addWatchedItem('movie', this.movie.id, this.movie.poster_path, this.movie.title).subscribe(res => {
-        if (res.add) {
-          this.isWatched = true;
-          this.dataChanged();
-        }
+        this.dataChanged('watched');
       })
+      this.isWatched = true;
     }
   }
   addFavourite() {
     if (this.isFavourite) {
       this.userService.removeFavouriteItem('movie', this.movie.id).subscribe(res => {
-        if (res.remove) {
-          this.isFavourite = false;
-          this.dataChanged();
-        }
+        this.dataChanged('favourite');
       })
+      this.isFavourite = false;
     }
     else {
       this.userService.addFavouriteItem('movie', this.movie.id, this.movie.poster_path, this.movie.title).subscribe(res => {
-        if (res.add) {
-          this.isFavourite = true;
-          this.dataChanged();
-        }
+        this.dataChanged('favourite');
       })
+      this.isFavourite = true;
     }
   }
 

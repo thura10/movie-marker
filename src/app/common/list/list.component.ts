@@ -43,7 +43,7 @@ export class ListComponent implements OnInit, OnChanges {
   favourite: any[] = [];
 
   ngOnInit() {
-    this.dataChanged();
+    this.dataChanged('');
   }
   ngOnChanges() {
     if (this.query) {
@@ -63,13 +63,26 @@ export class ListComponent implements OnInit, OnChanges {
     return false
   }
 
-  dataChanged() {
-    this.userService.getWatched().subscribe(res => {
-      this.watched = res;
-    })
-    this.userService.getFavourite().subscribe(res => {
-      this.favourite = res;
-    })
+  dataChanged(event) {
+    switch (event) {
+      case 'watched':
+        this.userService.getWatched().subscribe(res => {
+          this.watched = res;
+        })
+        break;
+      case 'favourite':
+        this.userService.getFavourite().subscribe(res => {
+          this.favourite = res;
+        });
+        break;
+      default:
+        this.userService.getWatched().subscribe(res => {
+          this.watched = res;
+        });
+        this.userService.getFavourite().subscribe(res => {
+          this.favourite = res;
+        });
+    }
   }
 
 }

@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor(private tmdb: TmdbService, private ui: UiService, private userService: UserService) { }
   ngOnInit() {
     //get data for watched and favourite
-    this.dataChanged();
+    this.dataChanged('');
   }
 
   ngAfterViewInit() {
@@ -86,12 +86,95 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     overviewItems.style.overflowX = "hidden";
   }
 
-  dataChanged() {
-    this.userService.getWatched().subscribe(res => {
-      this.watched = res;
+  dataChanged(event) {
+    switch (event) {
+      case 'watched':
+        this.userService.getWatched().subscribe(res => {
+          this.watched = res;
+          this.calculateWatchtime();
+        })
+        break;
+      case 'favourite':
+        this.userService.getFavourite().subscribe(res => {
+          this.favourite = res;
+        });
+        break;
+      case 'collection':
+        this.getCollectionCount();
+        break;
+      default:
+        this.userService.getWatched().subscribe(res => {
+          this.watched = res;
+          this.calculateWatchtime();
+        });
+        this.userService.getFavourite().subscribe(res => {
+          this.favourite = res;
+        });
+        this.getCollectionCount();
+    }
+  }
+
+  movieWatchedCount: number;
+  movieWatchtime: string;
+
+  tvWatchedCount: number;
+  episodeWatchedCount: number;
+  tvWatchtime: string;
+
+  calculateWatchtime() {
+    this.movieWatchedCount = 0;
+    let movieTime = 0;
+
+    this.tvWatchedCount = 0;
+    this.episodeWatchedCount = 0;
+    let tvTime = 0;
+
+    this.watched.forEach((item) => {
+      if (item.type == 'movie') {
+        //push movie items into movie and plus runtime
+        this.movieWatchedCount += 1;
+        if (!isNaN(item.runtime)) movieTime += item.runtime;
+      }
+      else if (item.type == 'tv') {
+        this.tvWatchedCount += 1;
+        if (!isNaN(item.runtime)) tvTime += item.runtime;
+        if (!isNaN(item.episode_count)) this.episodeWatchedCount += item.episode_count;
+      }
     })
-    this.userService.getFavourite().subscribe(res => {
-      this.favourite = res;
+    this.movieWatchtime = this.convertMinIntoDisplayFormat(movieTime);
+    this.tvWatchtime = this.convertMinIntoDisplayFormat(tvTime);
+  }
+
+  convertMinIntoDisplayFormat(time: number) {
+    if (time > 60) {
+      let hour = Math.floor(time/60);
+      time = time % 60;
+      if (hour > 24) {
+        let day = Math.floor(hour/24);
+        hour = hour % 24;
+        let str = `${day} days`;
+        str += hour ? `, ${hour} hours` : '';
+        str += time ? `, ${time} minutes` : '';
+        str += ' of watchtime';
+        return str;
+      }
+      let str = `${hour} hours`;
+      str += time ? `, ${time} minutes` : '';
+      str += ' of watchtime';
+      return `${hour} hours, ${time} minutes of watchtime`
+    }
+    return `${time} minutes of watchtime`;
+  }
+
+  movieCollectionCount: number = 0;
+  tvCollectionCount: number = 0;
+
+  getCollectionCount() {
+    this.userService.getCollectionCount().subscribe(res => {
+      if (res) {
+        this.movieCollectionCount = res.movieCount;
+        this.tvCollectionCount = res.tvCount;
+      }
     })
   }
 }

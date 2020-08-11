@@ -17,7 +17,7 @@ export class MovieItemComponent implements OnChanges {
   isWatched: boolean;
   isFavourite: boolean;
 
-  @Output() changed = new EventEmitter<boolean>();
+  @Output() changed = new EventEmitter<string>();
 
   addingToCollection: boolean;
 
@@ -47,37 +47,29 @@ export class MovieItemComponent implements OnChanges {
   addWatched() {
     if (this.isWatched) {
       this.userService.removeWatchedItem('movie', this.movie.id).subscribe(res => {
-        if (res.remove){
-          this.isWatched = false;
-          this.changed.emit(true);    
-        }
+        this.changed.emit('watched');    
       })
+      this.isWatched = false;
     }
     else {
       this.userService.addWatchedItem('movie', this.movie.id, this.movie.poster_path, this.movie.title).subscribe(res => {
-        if (res.add) {
-          this.isWatched = true;
-          this.changed.emit(true);
-        }
+        this.changed.emit('watched');
       })
+      this.isWatched = true;
     }
   }
   addFavourite() {
     if (this.isFavourite) {
       this.userService.removeFavouriteItem('movie', this.movie.id).subscribe(res => {
-        if (res.remove) {
-          this.isFavourite = false;
-          this.changed.emit(true);    
-        }
+        this.changed.emit('favourite');    
       })
+      this.isFavourite = false;
     }
     else {
       this.userService.addFavouriteItem('movie', this.movie.id, this.movie.poster_path, this.movie.title).subscribe(res => {
-        if (res.add) {
-          this.isFavourite = true;
-          this.changed.emit(true);
-        }
+        this.changed.emit('favourite');
       })
+      this.isFavourite = true;
     }
   }
 }

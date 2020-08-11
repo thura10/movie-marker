@@ -78,6 +78,9 @@ export class UserService {
   removeCollectionItem(_id: string, itemId: string, type: string) {
     return this.http.put<any>(`./api/user/collection/remove`, {'_id': _id, 'itemId': itemId, 'type': type, 'userId': this.getToken()});
   }
+  getCollectionCount() {
+    return this.http.get<any>(`./api/user/collection/count/${this.getToken()}`);
+  }
 
   getWatched() {
     return this.http.get<any[]>(`./api/user/watched/${this.getToken()}`)

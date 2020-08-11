@@ -11,8 +11,8 @@
       <div class="overviewItem">
         <img class="overviewIcon no-select" src="../../assets/film-icon.png" width="30">
         <div class="d-inline-block ml-4 overviewText">
-          <span class="text-break"><span>10 days, 5 hours, 5 minutes</span> of watchtime</span><br>
-          <span>115 Movies</span>
+          <span class="text-break">{{movieWatchtime}}</span><br>
+          <span>{{movieWatchedCount}} Movies</span>
         </div>
       </div>
     </div>
@@ -22,8 +22,8 @@
       <div class="overviewItem">
         <img class="overviewIcon no-select" src="../../assets/tv_icon.png" width="40">
         <div class="d-inline-block ml-4 overviewText">
-          <span class="text-break"><span>10 days, 5 hours, 5 minutes</span> of watchtime</span><br>
-          <span>1,564 Episodes (25 Shows)</span>
+          <span class="text-break">{{tvWatchtime}}</span><br>
+          <span>{{tvWatchedCount}} TV Shows ({{episodeWatchedCount}} Episodes)</span>
         </div>
       </div>
     </div>
@@ -32,8 +32,8 @@
       <div class="overviewItem">
         <img class="overviewIcon no-select" src="../../assets/collections-icon.png" width="30" height="30">
         <div class="d-inline-block ml-4 overviewText">
-          <span><span>1,153 episodes (25 Shows)</span> collected</span><br>
-          <span>214 Movies collected</span>
+          <span><span>{{movieCollectionCount}} Movies</span> collected</span><br>
+          <span>{{tvCollectionCount}} TV Shows collected</span>
         </div>
       </div>
     </div>

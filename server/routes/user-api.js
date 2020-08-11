@@ -5,6 +5,7 @@ const MongoClient = require('mongodb').MongoClient
 const ObjectId = require('mongodb').ObjectID
 
 const bcrypt = require('bcryptjs');
+const axios = require('axios');
 const BCRYPT_SALT_ROUNDS = 12;
 
 var db;
@@ -204,6 +205,41 @@ router.route('/collection/remove').put((req, res) => {
         res.send({"remove": true});
     })
 })
+router.route('/collection/count/:userId').get((req, res) => {
+    db.collection('collections').aggregate([
+        { $match: { owner_id: ObjectId(req.params.userId) } },
+        { $addFields: {
+            movieCount: {
+              $size: {
+                $filter: {
+                  input: '$items',
+                  as: 'part',
+                  cond: { $eq: ['$$part.type', 'movie']}
+                }
+              }
+            },
+            tvCount: {
+                $size: {
+                  $filter: {
+                    input: '$items',
+                    as: 'part',
+                    cond: { $eq: ['$$part.type', 'tv']}
+                  }
+                }
+              }
+          }
+        }
+    ]).toArray((err, result) => {
+        if (err) console.log(err);
+        let movieCount = 0;
+        let tvCount = 0;
+        for (item of result) {
+            movieCount += item.movieCount;
+            tvCount += item.tvCount;
+        }
+        res.send({movieCount: movieCount, tvCount: tvCount})
+    })
+})
 
 router.route('/watched/:userId').get((req, res) => {
     db.collection('users').findOne({'_id': ObjectId(req.params.userId)}, (err, result) => {
@@ -231,14 +267,28 @@ router.route('/watched/:userId/add').post((req, res) => {
         'poster_path': req.body.poster
     };
     req.body.type=='movie' ? item.title = req.body.name : item.name = req.body.name;
-
-    db.collection('users').updateOne({'_id': ObjectId(req.params.userId)}, {$addToSet: {'watched': item}}, (err, result) => {
-        if (err) return console.log(err);
-        if (result) {
-            res.send({'add': true});
-            return;
+    //get runtime and add it to watched item
+    axios.get(`https://api.themoviedb.org/3/${req.body.type}/${req.body.itemId}?api_key=ef0b54d540e68c2dd4a0ff428b46161c&language=en-US`)
+    .then(response => {
+        if (req.body.type == 'movie' && response.data) {
+            item.runtime = response.data.runtime;
         }
-        res.send({'add': false})
+        else if (response.data) {
+            let episodeRuntime = response.data.episode_run_time;
+            item.episode_count = +response.data.number_of_episodes
+            item.runtime = (episodeRuntime.length ? episodeRuntime[0] : 0) * item.episode_count;
+        }
+        db.collection('users').updateOne({'_id': ObjectId(req.params.userId)}, {$addToSet: {'watched': item}}, (err, result) => {
+            if (err) return console.log(err);
+            if (result) {
+                res.send({'add': true});
+                return;
+            }
+            res.send({'add': false})
+        })
+    })
+    .catch(err => {
+        console.log(err)
     })
 })
 router.route('/favourite/:userId/add').post((req, res) => {

@@ -8,16 +8,16 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
     <ul class="nav navbar-nav ml-3 mr-auto">
-      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" routerLink="/" routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{exact:true}">
+      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true" routerLink="/" routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{exact:true}">
           <img class="navIcon no-select" src="../assets/nav-dashboard-icon.png">Dashboard
         </a></li> 
-      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" routerLink="/collections" routerLinkActive="activeNavItem">
+      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true" routerLink="/collections" routerLinkActive="activeNavItem">
         <img class="navIcon no-select" src="../assets/nav-collection-icon.png">Collections
       </a></li>
-      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" routerLink="/calendar" routerLinkActive="activeNavItem">
+      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true" routerLink="/calendar" routerLinkActive="activeNavItem">
         <img class="navIcon no-select" src="../assets/nav-calendar-icon.png">Calendar
       </a></li> 
-      <li><a [class.navItemExpanded]="!isCollapsed" class="navItem nav-link active font-code ml-1" routerLink="/discover" routerLinkActive="activeNavItem">
+      <li><a [class.navItemExpanded]="!isCollapsed" class="navItem nav-link active font-code ml-1" (click)="isCollapsed = true" routerLink="/discover" routerLinkActive="activeNavItem">
         <img class="navIcon no-select" src="../assets/nav-discover-icon.png">Discover
       </a></li>
     </ul>
