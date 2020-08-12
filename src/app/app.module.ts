@@ -32,6 +32,7 @@ import { CollectionDetailsComponent } from './collections/collection-details/col
 import { ActorDetailsComponent } from './actor/actor-details/actor-details.component';
 import { GenreComponent } from './common/genre/genre.component';
 import { LazyListComponent } from './common/lazy-list/lazy-list.component';
+import { DiscoverListComponent } from './discover/discover-list/discover-list.component';
 
 @NgModule({
   entryComponents: [
@@ -59,7 +60,8 @@ import { LazyListComponent } from './common/lazy-list/lazy-list.component';
     CollectionDetailsComponent,
     ActorDetailsComponent,
     GenreComponent,
-    LazyListComponent
+    LazyListComponent,
+    DiscoverListComponent,
   ],
   imports: [
     BrowserModule,

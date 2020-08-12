@@ -1,3 +1,32 @@
-<p>
-  calendar works!
-</p>
+<div style="margin-top: 110px;" class="container-fluid text-white">
+  <div class="row mx-5">
+    <div class="col title">
+      <p class="font-code text-center text-lg-left">
+        <i (click)="prevWeek()" class="fas fa-chevron-left mr-3 cursor-pointer"></i>
+          <span>Calendar</span>
+        <i (click)="nextWeek()" class="fas fa-chevron-right ml-3 cursor-pointer"></i> 
+      </p>
+      <p *ngIf="shows" class="text-center text-lg-left">{{shows.length}} episodes airing the week of {{ordinal_suffix_of(week[0].date)}} {{week[0].month}}</p>
+    </div>
+  </div>
+  <ng-container *ngFor="let day of week">
+    <div class="row">
+      <div class="col date-col d-flex">
+        <p class="ml-3">{{day.date}}</p>
+        <div class="ml-3 d-flex flex-column justify-content-center">
+          <span>{{day.month}}</span>
+          <span>{{day.day}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div *ngIf="shows" class="overflow-x-auto d-flex flex-nowrap flex-row w-100 pt-2 pl-2 pl-lg-5">
+          <div class="mr-4" *ngFor="let result of getResultsForDay(day, shows)">
+            <app-tv-item [tv]="result" [calendar]="result.calendar" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-tv-item>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

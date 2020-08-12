@@ -32,4 +32,25 @@ export class TmdbService {
   getGenreList(type: string) {
     return this.http.get<any>(`./api/tmdb/genres/${type}/list`)
   } 
+
+  getCalendarShows(startDate: string, endDate: string) {
+    return this.http.get<any[]>(`./api/tmdb/calendar/tv/${startDate}/${endDate}`)
+  }
+
+  getPopularMovies(page?: number) {
+    let no = page ? page : 1;
+    return this.http.get<any>(`./api/tmdb/discover/popular/movie/${no}`)
+  }
+  getPopularTv(page?: number) {
+    let no = page ? page : 1;
+    return this.http.get<any>(`./api/tmdb/discover/popular/tv/${no}`)
+  }
+  getTrendingMovies(page?: number) {
+    let no = page ? page : 1;
+    return this.http.get<any>(`./api/tmdb/discover/trending/movie/${no}`)
+  }
+  getTrendingTv(page?: number) {
+    let no = page ? page : 1;
+    return this.http.get<any>(`./api/tmdb/discover/trending/tv/${no}`)
+  }
 }

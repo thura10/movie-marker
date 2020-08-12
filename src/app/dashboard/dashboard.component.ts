@@ -103,13 +103,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.getCollectionCount();
         break;
       default:
-        this.userService.getWatched().subscribe(res => {
-          this.watched = res;
-          this.calculateWatchtime();
-        });
-        this.userService.getFavourite().subscribe(res => {
-          this.favourite = res;
-        });
+        this.dataChanged('watched');
+        this.dataChanged('favourite');
         this.getCollectionCount();
     }
   }

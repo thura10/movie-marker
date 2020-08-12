@@ -19,8 +19,6 @@ export class GenreComponent implements OnInit, OnDestroy {
   list: any[] = [];
 
   collectionSize: number;
-  search = new FormControl();
-  query: string = "";
 
   constructor(private route: ActivatedRoute, private tmdb: TmdbService) { }
 
@@ -39,9 +37,6 @@ export class GenreComponent implements OnInit, OnDestroy {
         this.list = res.results;
         this.collectionSize = res.total_results;
       })
-    })
-    this.search.valueChanges.subscribe(res => {
-      this.query = res;
     })
   }
   ngOnDestroy() {

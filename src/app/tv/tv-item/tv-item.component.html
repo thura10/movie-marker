@@ -8,10 +8,16 @@
 </div>
 <div [routerLink]="['/tv', tv.id]" class="movieItemText text-white text-nowrap text-center my-3 mx-auto">
   <span title="{{tv.name}}" class="cursor-pointer" style="font-size: large; font-weight: 500;">{{tv.name}}</span><br>
-  <p class="mt-1 cursor-pointer" style="font-size: 14px; font-weight: 300;">
+  <p *ngIf="!calendar" class="mt-1 cursor-pointer" style="font-size: 14px; font-weight: 300;">
     <span *ngIf="tv.first_air_date && tv.first_air_date != ''">{{tv.first_air_date.slice(0,4)}}<span *ngIf="tv.vote_average && tv.vote_average != 0.0">&nbsp;&nbsp;•&nbsp;&nbsp;</span></span>
     <img *ngIf="tv.vote_average && tv.vote_average != 0.0" style="vertical-align: text-top;" src="../../../assets/star.png" width="15">
     <span *ngIf="tv.vote_average && tv.vote_average != 0.0">&nbsp;{{tv.vote_average}}</span>
+  </p>
+  <p *ngIf="calendar == 'last'" title="{{tv.last_episode_to_air.name}}" class="mt-1 cursor-pointer" style="font-size: 14px; font-weight: 300;">
+    <span>S{{tv.last_episode_to_air.season_number}} E{{tv.last_episode_to_air.episode_number}}: {{tv.last_episode_to_air.name}}</span>
+  </p>
+  <p *ngIf="calendar == 'next'" title="{{tv.next_episode_to_air.name}}" class="mt-1 cursor-pointer" style="font-size: 14px; font-weight: 300;">
+    <span>S{{tv.next_episode_to_air.season_number}} E{{tv.next_episode_to_air.episode_number}}: {{tv.next_episode_to_air.name}}</span>
   </p>
 </div>
 

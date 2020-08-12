@@ -113,7 +113,7 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
   }
   getLastEpisode(episode: any) {
     if (!episode.season_number || !episode.episode_number || !episode.name) return "";
-    let str = `${episode.season_number}x${episode.episode_number}: ${episode.name}`
+    let str = `S${episode.season_number} E${episode.episode_number}: ${episode.name}`
     if (episode.air_date) {
       let date = episode.air_date.split('-');
       str += ` (${date[2]}-${date[1]}-${date[0]})`

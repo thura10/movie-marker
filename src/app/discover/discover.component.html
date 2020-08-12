@@ -1,3 +1,50 @@
-<p>
-  discover works!
-</p>
+<div class="container-fluid text-white">
+  <div *ngIf="trendingMovies" class="row">
+    <div class="col">
+      <h4 [routerLink]="['/discover/movie/trending']" routerLinkActive="router-link-active"  class="font-code ml-2 ml-lg-5 cursor-pointer">
+        <i class="fas fa-chart-line"></i>Trending Movies
+      </h4>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100 pt-2 pl-2 pl-lg-5">
+        <div class="mr-4" *ngFor="let result of trendingMovies">
+          <app-movie-item [movie]="result" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-movie-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="trendingTv" class="row">
+    <div class="col">
+      <h4 [routerLink]="['/discover/tv/trending']" class="font-code ml-2 ml-lg-5 cursor-pointer">
+        <i class="fas fa-chart-line"></i>Trending Shows
+      </h4>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100 pt-2 pl-2 pl-lg-5">
+        <div class="mr-4" *ngFor="let result of trendingTv">
+          <app-tv-item [tv]="result" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-tv-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="popularMovies" class="row">
+    <div class="col">
+      <h4 [routerLink]="['/discover/movie/popular']" class="font-code ml-2 ml-lg-5 cursor-pointer">
+        <i class="far fa-star"></i>Popular Movies
+      </h4>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100 pt-2 pl-2 pl-lg-5">
+        <div class="mr-4" *ngFor="let result of popularMovies">
+          <app-movie-item [movie]="result" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-movie-item>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="popularTv" class="row">
+    <div class="col">
+      <h4 [routerLink]="['/discover/tv/popular']" class="font-code ml-2 ml-lg-5 cursor-pointer">
+        <i class="far fa-star"></i>Popular Shows
+      </h4>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100 pt-2 pl-2 pl-lg-5">
+        <div class="mr-4" *ngFor="let result of popularTv">
+          <app-tv-item [tv]="result" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-tv-item>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

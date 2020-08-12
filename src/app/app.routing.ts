@@ -12,6 +12,7 @@ import { ListComponent } from './common/list/list.component';
 import { CollectionDetailsComponent } from './collections/collection-details/collection-details.component';
 import { ActorDetailsComponent } from './actor/actor-details/actor-details.component';
 import { GenreComponent } from './common/genre/genre.component';
+import { DiscoverListComponent } from './discover/discover-list/discover-list.component';
 
 const appRoutes: Routes = [
     {path: 'calendar', component: CalendarComponent},
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
     {path: 'collections/:id', component: CollectionDetailsComponent},
     {path: 'actor/:id', component: ActorDetailsComponent},
     {path: 'genre/:type/:id', component: GenreComponent},
+    {path: 'discover/:type/:id', component: DiscoverListComponent},
     {path: '', component: DashboardComponent, pathMatch: 'full'},
 ]
 

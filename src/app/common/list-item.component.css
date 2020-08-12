@@ -16,6 +16,7 @@
     height: 270px; 
     width: 180px; 
     background-size: contain;
+    box-shadow: 0px 0px 10px black;
 }
 .movieItemSmall {
     min-height: 180px;

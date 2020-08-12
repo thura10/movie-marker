@@ -11,6 +11,8 @@ export class TvItemComponent implements OnChanges {
   @Input() tv: any;
   addingToCollection: boolean;
 
+  @Input() calendar: string;
+
   constructor(private userService: UserService) { }
 
   addFinished() {

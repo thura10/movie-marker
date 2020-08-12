@@ -35,7 +35,6 @@ export class LazyListComponent implements OnInit, OnChanges {
   constructor(private ui: UiService, private userService: UserService) { }
 
   @Input() list: any[] = [];
-  @Input() query: string = '';
   @Input() collectionSize: number;
 
   @Output() pageChanged = new EventEmitter<number>();
@@ -56,13 +55,6 @@ export class LazyListComponent implements OnInit, OnChanges {
     this.ui.showSpinner();
     window.scroll({top: 0, behavior: 'smooth'});
     this.pageChanged.emit(event);
-  }
-
-  stringCompare(str1: string, str2: string, query: string) {
-    let text = str1 || str2;
-
-    if (text.toLowerCase().includes(query.toLowerCase())) return true;
-    return false
   }
 
   dataChanged(event) {
