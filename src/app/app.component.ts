@@ -77,6 +77,7 @@ export class AppComponent implements OnInit {
           this.modal.dismissAll();
           this.loginSubmitted = false;
           this.loginError = "";
+          window.location.reload();
         }
         else if (result[0].reason == "username") {
           this.loginError = "Invalid Username"
@@ -94,7 +95,7 @@ export class AppComponent implements OnInit {
 
   onLogout() {
     this.userService.logout();
-    this.ngOnInit();
+    window.location.reload();
   }
 
   onRegister() {
@@ -108,6 +109,7 @@ export class AppComponent implements OnInit {
           this.modal.dismissAll();
           this.registerSubmitted = false;
           this.registerError = "";
+          window.location.reload();
         }
         else if (result[0].reason == "username") {
           this.registerError = "An account with the specified username already exists"
@@ -120,6 +122,12 @@ export class AppComponent implements OnInit {
         }
         this.ui.stopSpinner();
       })
+    }
+  }
+
+  collectionRoute(modal) {
+    if (!this.userService.getToken()) {
+      this.openModal(modal);
     }
   }
 

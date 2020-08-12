@@ -38,6 +38,7 @@ export class DiscoverComponent implements OnInit {
   favourite: any[] = [];
 
   dataChanged(event) {
+    if (!this.userService.getToken()) return;
     switch (event) {
       case 'watched':
         this.userService.getWatched().subscribe(res => {

@@ -1,11 +1,11 @@
-<div [class.bgCollapsed] = "searching" class="d-flex flex-column" id="bg">
+<div [class.bgCollapsed] = "searching || !userService.getToken()" class="d-flex flex-column" id="bg">
   <div class="mb-5" style="margin-top: 125px; width: 100%; z-index: 2;">
     <div id="searchBar" (click)="searchFocus()">
       <img style="height: 1.4rem;" class="ml-1 no-select" src="../../assets/search-icon.png">
       <input #searchText id="searchText" class="font-code text-white ml-md-5" type="text" placeholder="SEARCH">
     </div>
   </div>
-  <div #overviewItems *ngIf="!searching" id="overview" class="d-flex">
+  <div #overviewItems *ngIf="!searching && userService.getToken()" id="overview" class="d-flex">
     <h2 *ngIf="overviewIndex != 0" style="left: 0;" class="mh-100 m-auto text-white cursor-pointer arrow-pointers" (click) = "scrollOverviewPrev(overviewItems)">&nbsp;&nbsp;&lt;</h2>
     <div class="p-5 text-white m-auto d-inline-block w-100">
       <div class="overviewItem">

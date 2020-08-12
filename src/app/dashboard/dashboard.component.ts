@@ -87,6 +87,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   dataChanged(event) {
+    if (!this.userService.getToken()) return;
     switch (event) {
       case 'watched':
         this.userService.getWatched().subscribe(res => {
@@ -117,6 +118,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   tvWatchtime: string;
 
   calculateWatchtime() {
+    if (!this.userService.getToken()) return;
+
     this.movieWatchedCount = 0;
     let movieTime = 0;
 
@@ -165,6 +168,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   tvCollectionCount: number = 0;
 
   getCollectionCount() {
+    if (!this.userService.getToken()) return;
     this.userService.getCollectionCount().subscribe(res => {
       if (res) {
         this.movieCollectionCount = res.movieCount;

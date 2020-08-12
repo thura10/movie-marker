@@ -21,7 +21,7 @@
       <p style="font-size: large;" class="mt-3 mb-0 font-code">{{movie.tagline}}</p>
     </div>
     <div class="col-lg-3 col-12 mt-lg-4 mt-2 order-lg-3 order-2">
-      <div style="width: fit-content;" class="m-auto text-white">
+      <div *ngIf="userService.getToken()" style="width: fit-content;" class="m-auto text-white">
         <button (click)="addWatched()" [class.isWatched]="isWatched" class="btn font-code item-watched-btn item-btn mt-0 mt-lg-3 mx-2">
           <i class="fas fa-check"></i><span class="d-none d-lg-inline-block">&nbsp;&nbsp;Watched</span>
         </button>

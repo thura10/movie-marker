@@ -80,6 +80,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   }
 
   dataChanged(event) {
+    if (!this.userService.getToken()) return;
     switch (event) {
       case 'watched':
         this.userService.getWatched().subscribe(res => {

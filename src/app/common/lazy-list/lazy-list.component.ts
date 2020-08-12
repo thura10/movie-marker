@@ -58,6 +58,7 @@ export class LazyListComponent implements OnInit, OnChanges {
   }
 
   dataChanged(event) {
+    if (!this.userService.getToken()) return;
     switch (event) {
       case 'watched':
         this.userService.getWatched().subscribe(res => {
