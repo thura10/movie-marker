@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-7">
       <h3 *ngIf="collection" class="font-code text-white ml-4">{{collection.name}}
-        <div *ngIf="!special" style="font-size: 1.2rem;" class="d-inline-block ml-lg-3">
+        <div *ngIf="!special && collection.owner_id" style="font-size: 1.2rem;" class="d-inline-block ml-lg-3">
           <i (click)="edit()" class="fas fa-pencil-alt ml-lg-4 cursor-pointer"></i>
           <i (click)="share()" class="fas fa-share-alt ml-4 cursor-pointer"></i>
           <i (click)="delete()" class="far fa-trash-alt ml-4 cursor-pointer"></i>  

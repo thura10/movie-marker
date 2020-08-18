@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   registerSubmitted = false;
   registerError: string = "";
 
+  admin: boolean = false;
+
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
       let pass = group.value.password;
       let confirmPass = group.value.password1;
@@ -48,6 +50,12 @@ export class AppComponent implements OnInit {
     })
     this.registerPassword.setValidators(this.checkPasswords)
     this.onAuth();
+
+    this.userService.checkAdmin().subscribe(res => {
+      if (res && res.admin) {
+        this.admin = res.admin;
+      }
+    })
   }
 
   openModal(content) {

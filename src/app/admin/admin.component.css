@@ -1,0 +1,39 @@
+.bg {
+    position: absolute;
+    background-image: url('../../assets/dashboardBg.png');
+    background-size: cover;
+}
+.container {
+    margin-top: 110px;
+}
+#table {
+    background-color: #252525; 
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px black;
+}
+#table th {
+    border-top: 0;
+}
+#actions-dropdown::after {
+    content: none;
+}
+
+#dropdown-menu {
+    width: 80%; 
+    min-width: max-content;
+    background-color:#151515;
+    padding: 0;
+    border-radius: 6px;
+}
+.dropdown-item {
+    padding: 0.8rem 1rem;
+    color: white;
+    cursor: pointer;
+}
+.dropdown-item:active {
+    opacity: .6;
+}
+.dropdown-item:hover {
+    color: #E54848 !important;
+    background-color: #202020;
+}

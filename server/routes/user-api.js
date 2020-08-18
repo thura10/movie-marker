@@ -50,6 +50,18 @@ router.route('/auth').post((req, res) => {
     })
 })
 
+router.route('/auth/admin').post((req, res) => {
+    db.collection('users').findOne({"_id": ObjectId(req.body.id)}, (err, result) => {
+        if (err) return console.log(err);
+        if (result) {
+            const admin = (result.role && result.role.includes('admin'));
+            res.send({"admin": admin});
+            return;
+        }
+        res.send({"admin": false});
+    })
+})
+
 router.route('/register').post(function(req, res) {
     var username = req.body.username;
     var email = req.body.email;
@@ -319,6 +331,37 @@ router.route('/favourite/:userId/remove').put((req, res) => {
     db.collection('users').updateOne({'_id': ObjectId(req.params.userId)}, {$pull: {"favourite": {'id': req.body.itemId, 'type': req.body.type}} }, { multi : true}, (err, result) => {
         if (err) return console.log(err);
         res.send({"remove": true});
+    })
+})
+
+router.route('/admin/get/:_id').get((req, res) => {
+    db.collection('users').findOne({_id: ObjectId(req.params._id)}, (err, result) => {
+        if (err) return console.log(err);
+        if (result && result.role && result.role.includes('admin')) {
+            db.collection('users').find({}).toArray((err, result) => {
+                if (err) return console.log(err);
+                res.send(result);
+            })
+        }
+        else res.send([]);
+    })
+})
+router.route('/admin/delete/:_id').delete((req, res) => {
+    db.collection("users").deleteOne({_id: ObjectId(req.params._id), role: {$ne: 'admin'}}, (err, result) => {
+        if (err) return console.log(err);
+        res.send({'delete': true});
+    })
+})
+router.route('/admin/demote/:_id').put((req, res) => {
+    db.collection('users').updateOne({_id: ObjectId(req.params._id), role: 'admin'}, {$pull: {role: 'admin'}}, (err, result) => {
+        if (err) return console.log(err);
+        res.send({'demote': true});
+    })
+})
+router.route('/admin/promote/:_id').put((req, res) => {
+    db.collection('users').updateOne({_id: ObjectId(req.params._id)}, {$addToSet: {role: 'admin'}}, (err, result) => {
+        if (err) return console.log(err);
+        res.send({'demote': true});
     })
 })
 

@@ -12,6 +12,7 @@ import { ActorDetailsComponent } from './actor/actor-details/actor-details.compo
 import { GenreComponent } from './common/genre/genre.component';
 import { DiscoverListComponent } from './discover/discover-list/discover-list.component';
 import { AuthGuard } from './auth.guard';
+import { AdminComponent } from './admin/admin.component';
 
 const appRoutes: Routes = [
     {path: 'calendar', component: CalendarComponent},
@@ -19,10 +20,11 @@ const appRoutes: Routes = [
     {path: 'discover', component: DiscoverComponent},
     {path: 'movie/:id', component: MovieDetailsComponent},
     {path: 'tv/:id', component: TvDetailsComponent},
-    {path: 'collections/:id', component: CollectionDetailsComponent, canActivate: [AuthGuard], data: {permission: {only: ['user', 'admin']}}},
+    {path: 'collections/:id', component: CollectionDetailsComponent, canActivate: [AuthGuard], data: {permission: ['user', 'admin']}},
     {path: 'actor/:id', component: ActorDetailsComponent},
     {path: 'genre/:type/:id', component: GenreComponent},
     {path: 'discover/:type/:id', component: DiscoverListComponent},
+    {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: {permission: ['admin']}},
     {path: '', component: DashboardComponent, pathMatch: 'full'},
 ]
 

@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserService } from '../user.service';
 import { UiService } from '../ui.service';
 import { FormControl, Validators } from '@angular/forms';
+import { TmdbService } from '../tmdb.service';
 
 @Component({
   selector: 'app-collections',
@@ -10,7 +11,7 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class CollectionsComponent implements OnInit {
 
-  constructor(private modal: NgbModal, private userService: UserService, private ui: UiService) { }
+  constructor(private modal: NgbModal, private userService: UserService, private ui: UiService, private tmdb: TmdbService) { }
 
   collections: any[] = [];
   sharedCollections: any[] = [];
@@ -23,11 +24,10 @@ export class CollectionsComponent implements OnInit {
   collectionEditMode: string;
   collectionEditName: string;
 
-  watched: any[] = [];
-
   ngOnInit() {
     this.addCollectionName.setValidators([Validators.required, Validators.pattern('^[A-Za-z0-9ñÑáéíóúÁÉÍÓÚ ]+$')]);
     this.ui.showSpinner();
+
     this.userService.getCollections().subscribe(result => {
       this.collections = result;
       this.collections.unshift({

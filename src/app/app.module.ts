@@ -33,6 +33,7 @@ import { ActorDetailsComponent } from './actor/actor-details/actor-details.compo
 import { GenreComponent } from './common/genre/genre.component';
 import { LazyListComponent } from './common/lazy-list/lazy-list.component';
 import { DiscoverListComponent } from './discover/discover-list/discover-list.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   entryComponents: [
@@ -62,6 +63,7 @@ import { DiscoverListComponent } from './discover/discover-list/discover-list.co
     GenreComponent,
     LazyListComponent,
     DiscoverListComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +73,7 @@ import { DiscoverListComponent } from './discover/discover-list/discover-list.co
     NgbCarouselModule,
     ReactiveFormsModule,
     NgbPaginationModule,
+    NgbDropdownModule,
     HttpModule,
     HttpClientModule,
     routing,

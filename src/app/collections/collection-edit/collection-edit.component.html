@@ -49,10 +49,7 @@
 
 <ng-template #deleteCollectionModal let-modal>
   <div class="modal-header color-bg-primary" style="border: none">
-    <p style="font-size: 1.2rem; " class="text-white">Do you want to delete '{{name}}' from your list of collections?</p>
-    <button type="button" class="close text-white p-0 m-0 mt-1" aria-label="Close" (click)="modal.dismiss();">
-      <span aria-hidden="true">&times;</span>
-    </button>  
+    <p style="font-size: 1.2rem; font-weight: 300;" class="text-white px-3 pt-2">Do you want to delete '{{name}}' from your list of collections?</p>
   </div>
   <div class="modal-body color-bg-primary pt-0" style="border: none;">
     <button (click)="modal.dismiss();" style="background-color: #404040;" type="button" class="btn form-button font-code text-white cursor-pointer d-inline-block float-right mr-0">Cancel</button>
@@ -71,7 +68,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-4">
         <div style="margin: auto; width: fit-content;" class="ml-sm-2">
-          <img style="border-radius: 8px" width="140" height="210" src="../../../assets/examplePoster.jpg">
+          <img style="border-radius: 8px" width="140" height="210" src="../../../assets/exampleCollection.png">
           <div style="width: 140px; overflow-x: hidden;" class="text-white text-nowrap text-center mt-2 mb-3 mr-4">
             <span style="font-size: large; font-weight: 500;">{{editCollectionName.value ? editCollectionName.value : 'Name' }}</span><br>
             <p style="font-size: 14px; font-weight: 300;">By {{userService.getSession()}}</p>

@@ -7,7 +7,7 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
-    <ul class="nav navbar-nav ml-3 mr-auto">
+    <ul class="nav navbar-nav ml-2 mr-auto">
       <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true" routerLink="/" routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{exact:true}">
           <img class="navIcon no-select" src="../assets/nav-dashboard-icon.png">Dashboard
         </a></li> 
@@ -20,6 +20,9 @@
       <li><a [class.navItemExpanded]="!isCollapsed" class="navItem nav-link active font-code ml-1" (click)="isCollapsed = true" routerLink="/discover" routerLinkActive="activeNavItem">
         <img class="navIcon no-select" src="../assets/nav-discover-icon.png">Discover
       </a></li>
+      <li *ngIf="admin"><a [class.navItemExpanded]="!isCollapsed" class="navItem nav-link active font-code ml-1" (click)="isCollapsed = true" routerLink="/admin" routerLinkActive="activeNavItem">
+        <img class="navIcon no-select" src="../assets/nav-settings-icon.png">Admin
+      </a></li>
     </ul>
     <div [ngClass]= "{'mb-3 mt-3 pl-5 pr-5' : !isCollapsed}" ngbDropdown>
       <button *ngIf="user == ''" (click)= "openModal(loginModal)" [ngClass]= "{'navItemExpanded w-100' : !isCollapsed}" type="button" class="btn btn-secondary nav-button cursor-pointer font-code">
@@ -27,7 +30,7 @@
       </button>
       <button *ngIf="user != ''" [ngClass]= "{'navItemExpanded w-100' : !isCollapsed}" class="btn btn-secondary dropdown-toggle font-code nav-button cursor-pointer" type="button" ngbDropdownToggle>
         <img class="mr-2 no-select" src="../assets/nav-user-icon.png" width="18">
-        {{user}}
+        <span class="d-inline d-lg-none d-xl-inline">{{user}}</span>
       </button>
       <div id="userDropdownMenu" [class.w-100] = "isCollapsed" ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
         <a (click) = "onLogout()" class="dropdown-item text-white" ngbDropdownItem>

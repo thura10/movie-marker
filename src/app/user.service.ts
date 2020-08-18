@@ -24,6 +24,10 @@ export class UserService {
     return this.http.post<any[]>('./api/user/auth', {"_id": this.getToken()})
   }
 
+  checkAdmin() {
+    return this.http.post<any>(`./api/user/auth/admin`, {id: this.getToken()})
+  }
+
   setToken(_id: string) {
     localStorage.setItem("_id", _id)
   }
@@ -117,5 +121,18 @@ export class UserService {
       'type': type,
       'itemId': itemId,
     })
+  }
+
+  getUsers() {
+    return this.http.get<any[]>(`./api/user/admin/get/${this.getToken()}`)
+  }
+  deleteUser(id: string) {
+    return this.http.delete<any>(`./api/user/admin/delete/${id}`)
+  }
+  promoteUser(id: string) {
+    return this.http.put<any>(`./api/user/admin/promote/${id}`, {})
+  }
+  demoteUser(id: string) {
+    return this.http.put<any>(`./api/user/admin/demote/${id}`, {})
   }
 }

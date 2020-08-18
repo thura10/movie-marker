@@ -55,7 +55,7 @@ export class CollectionDetailsComponent implements OnInit, OnDestroy {
         default:
           this.userService.getCollection(id).subscribe(result => {
             this.collection = result;
-            this.list = result.items;   
+            this.list = result.items;
             
             this.getCount();
             this.ui.stopSpinner();

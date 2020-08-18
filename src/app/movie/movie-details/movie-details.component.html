@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <div *ngIf="movie" class="row mb-4">
+  <div *ngIf="movie && (movie.videos.results.length || movie.images.backdrops.length)" class="row mb-4">
     <app-carousel class="w-100" [videos]= "movie.videos.results" [images]= "movie.images.backdrops"></app-carousel>
   </div>
 

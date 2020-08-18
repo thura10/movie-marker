@@ -14,6 +14,7 @@ export class GenreComponent implements OnInit, OnDestroy {
 
   id: string;
   type: string;
+  typeStr: string;
 
   genre: string;
   list: any[] = [];

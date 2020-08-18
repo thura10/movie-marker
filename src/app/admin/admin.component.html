@@ -1,0 +1,47 @@
+<div class="bg w-100 h-100"></div>
+<div class="container text-white">
+  <div class="row">
+    <div class="col">
+      <h3>Users</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table *ngIf="users && users.length" id="table" class="table table-striped text-white mt-3">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Watched Items</th>
+            <th scope="col">Favourite Items</th>
+            <th scope="col">Role</th>
+            <th> </th>
+          </tr>  
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; index as i">
+            <td scope="row">{{i+1}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.watched ? user.watched.length : 0}}</td>
+            <td>{{user.favourite ? user.favourite.length : 0}}</td>
+            <td>{{(user.role && user.role.includes('admin')) ? (user.role.includes('owner') ? 'Owner' : 'Admin') : 'User'}}</td>
+            <td>
+              <div *ngIf="determineDropdown(user)" ngbDropdown container="body">
+                <button id="actions-dropdown" class="btn btn-outline-primary btn-sm" ngbDropdownToggle>
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div id="dropdown-menu" ngbDropdownMenu>
+                  <a (click)="promoteUser(user)" *ngIf="getRole(user.role) === 'user'" class="dropdown-item" ngbDropdownItem>Promote Admin</a>
+                  <a (click)="demoteUser(user)" *ngIf="getRole(user.role) === 'admin' && myRole === 'owner'" class="dropdown-item" ngbDropdownItem>Demote User</a>
+                  <a (click)="deleteUser(user)" *ngIf="getRole(user.role) === 'user'" class="dropdown-item" ngbDropdownItem>Delete User</a>
+                </div>
+              </div>
+            </td>
+          </tr> 
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -53,4 +53,8 @@ export class TmdbService {
     let no = page ? page : 1;
     return this.http.get<any>(`./api/tmdb/discover/trending/tv/${no}`)
   }
+  
+  getRandomPoster() {
+    return this.http.get<any>(`./api/tmdb/discover/poster`);
+  }
 }

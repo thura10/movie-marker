@@ -192,6 +192,28 @@ router.route('/discover/trending/tv/:page').get((req, res) => {
         res.status(500).send(err);
     })
 })
+router.route('/discover/poster').get((req, res) => {
+    let str = addPathToUrl(base_url, ['movie', 'latest']);
+    let params = setParams({}).toString();
+
+    axios.get(`${str}?${params}`)
+    .then(result => {
+        let latestId = result.data.id;
+        let id = Math.floor(Math.random() * Math.floor(latestId));
+
+        let posterStr = addPathToUrl(base_url, ['movie', id])
+        axios.get(`${posterStr}?${params}`)
+        .then(poster => {
+            res.send({poster: poster.data.poster_path});
+        })
+        .catch(err => {
+            res.status(500).send(err);
+        })
+    })
+    .catch(err => {
+        res.status(500).send(err);
+    })
+})
 
 
 function setParams(obj) {
