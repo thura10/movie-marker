@@ -40,6 +40,33 @@
   </div>
 </div>
 
+<div *ngIf="!searching && userService.getToken()" class="pb-1 px-md-5 pt-5 pr-2 pl-4">
+  <p [routerLink]="['/dashboard/foryou']" routerLinkActive="router-link-active"  style="font-size: x-large" class="font-code text-white cursor-pointer">
+    <img src="../../assets/movieItem-favourite.svg" width="22" class="mr-4 no-select">For You
+  </p>
+  <h5 *ngIf="foryou.length == 0" class="text-center text-white mt-4 text-no-items">Get personal recommendations by adding favourites</h5>
+  <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
+    <div class="mr-4" *ngFor="let result of foryou.slice(0, 20)">
+      <app-movie-item *ngIf="result.title" [movie]="result" [small]="false" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-movie-item>
+      <app-tv-item *ngIf="result.name" [tv]="result" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-tv-item>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!searching && userService.getToken()" class="pb-3 px-md-5 pt-2 pr-2 pl-4">
+  <p [routerLink]="['/dashboard/nextup']" style="font-size: x-large" class="font-code text-white cursor-pointer">
+    <img src="../../assets/tv_icon.png" width="25" class="mr-4 no-select">Next up
+  </p>
+  <h5 *ngIf="nextUp.length == 0" class="text-center text-white mt-4 text-no-items mb-5">Add more TV Shows to 'Watched' to start tracking</h5>
+  <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
+    <div class="mr-4" *ngFor="let result of nextUp">
+      <app-tv-item [tv]="result" [calendar]="result.calendar" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-tv-item>
+    </div>
+  </div>
+</div>
+
+<h5 *ngIf="!searching && !userService.getToken()" class="text-center text-white mt-5 text-no-items">Sign in to get personalised recommendations and track shows</h5>
+
 <!--SEARCH RESULT HERE-->
 <div style="background-color: #202020;" *ngIf="searching">
   <div *ngIf="movieResults.length!= 0" class="pb-1 px-md-5 pt-5 pr-2 pl-4">

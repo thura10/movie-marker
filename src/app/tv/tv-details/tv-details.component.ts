@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ElementRef, Directive, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TmdbService } from '../../tmdb.service';
 import { UiService } from "../../ui.service";
 
@@ -63,7 +63,7 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
   season: any = {};
   hoveredSeasonNumber: number = null;
 
-  constructor(private route: ActivatedRoute, private ui: UiService, private tmdb: TmdbService, private userService: UserService) { }
+  constructor(private route: ActivatedRoute, private ui: UiService, private tmdb: TmdbService, private userService: UserService, private router: Router) { }
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.ui.showSpinner();
@@ -76,6 +76,8 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
         this.tv = result;
         this.dataChanged('');
         this.ui.stopSpinner();
+      }, err => {
+        this.router.navigateByUrl('/');
       })
     });
   }
@@ -111,12 +113,16 @@ export class TvDetailsComponent implements OnInit, OnDestroy {
     }
     return str
   }
+  formatDate(date: string) {
+    const dates = date.split('-');
+    const months = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
+    return `${dates[2]} ${months[parseInt(dates[1])-1]} ${dates[0]}`
+  }
   getLastEpisode(episode: any) {
     if (!episode.season_number || !episode.episode_number || !episode.name) return "";
     let str = `S${episode.season_number} E${episode.episode_number}: ${episode.name}`
     if (episode.air_date) {
-      let date = episode.air_date.split('-');
-      str += ` (${date[2]}-${date[1]}-${date[0]})`
+      str += ` (${this.formatDate(episode.air_date)})`
     }
     return str
   }

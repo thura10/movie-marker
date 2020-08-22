@@ -1,7 +1,7 @@
 <div @list class="row">
   <div @items *ngFor="let item of filteredList  | slice: (page-1) * 15 : (page-1) * 15 + 15" class="col-6 col-sm-4 col-lg-3">
     <app-movie-item *ngIf="item.type === 'movie' || item.title" [movie]="item" [small]="false" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-movie-item>
-    <app-tv-item *ngIf="item.type === 'tv' || item.name" [tv]="item" [watched]="watched" [favourite]="favourite" (changed)="dataChanged($event)"></app-tv-item>  
+    <app-tv-item *ngIf="item.type === 'tv' || item.name" [tv]="item" [watched]="watched" [favourite]="favourite" [calendar]="item.calendar" (changed)="dataChanged($event)"></app-tv-item>  
   </div>
 </div>
 

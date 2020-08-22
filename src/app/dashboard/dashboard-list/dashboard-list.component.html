@@ -1,0 +1,14 @@
+<div *ngIf="id" style="margin-top: 110px;" class="container">
+  <div class="row">
+    <div class="col-7 profile">
+      <p style="font-size: x-large" class="font-code text-white">
+        <img [src]="icon" width="25" class="ml-3 mr-4 no-select">{{title}}
+      </p>
+    </div>
+    <div class="col-5 mb-4 d-flex align-items-center">
+      <input [formControl]="search" class="search mr-4" type="text" placeholder="Search...">
+    </div>
+  </div>
+  <app-list *ngIf="items.length" [list]="items" [query]="query"></app-list>
+  <h5 *ngIf="items.length == 0" style="font-weight: 350;" class="text-center text-white mt-4">{{errorText}}</h5>
+</div>

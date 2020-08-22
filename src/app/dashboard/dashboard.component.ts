@@ -27,6 +27,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     //get data for watched and favourite
     this.dataChanged('');
+    this.getNextUp();
+    this.getForYou();
   }
 
   ngAfterViewInit() {
@@ -174,6 +176,27 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.movieCollectionCount = res.movieCount;
         this.tvCollectionCount = res.tvCount;
       }
+    })
+  }
+
+  nextUp: any[] = [];
+  foryou: any[] = [];
+  getNextUp() {
+    if (!this.userService.getToken()) return;
+    this.userService.getNextUp().subscribe(res => {
+      this.nextUp = res;
+      this.nextUp.forEach(tv => {
+        if (tv.next_episode_to_air) return Object.assign(tv, {calendar: 'next'});
+        Object.assign(tv, {calendar: 'last'});
+      });
+    })
+  }
+  getForYou() {
+    if (!this.userService.getToken()) return;
+    this.ui.showSpinner();
+    this.userService.getForYou().subscribe(res => {
+      this.foryou = res;
+      this.ui.stopSpinner();
     })
   }
 }

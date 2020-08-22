@@ -29,10 +29,10 @@ export class UserService {
   }
 
   setToken(_id: string) {
-    localStorage.setItem("_id", _id)
+    localStorage.setItem("token", _id)
   }
   getToken() {
-    return localStorage.getItem("_id")
+    return localStorage.getItem("token")
   }
   setSession(username: string) {
     sessionStorage.setItem("session_user", username);
@@ -134,5 +134,12 @@ export class UserService {
   }
   demoteUser(id: string) {
     return this.http.put<any>(`./api/user/admin/demote/${id}`, {})
+  }
+
+  getNextUp() {
+    return this.http.get<any[]>(`./api/user/dashboard/nextup/${this.getToken()}`)
+  }
+  getForYou() {
+    return this.http.get<any[]>(`./api/user/dashboard/foryou/${this.getToken()}`)
   }
 }

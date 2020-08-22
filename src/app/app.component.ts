@@ -108,8 +108,9 @@ export class AppComponent implements OnInit {
 
   onRegister() {
     this.registerSubmitted = true;
-    this.ui.showSpinner();
+
     if (this.registerForm.valid && this.registerPassword.valid) {
+      this.ui.showSpinner();
       this.userService.registerUser(this.registerForm.value.registerUsername, this.registerForm.value.registerEmail, this.registerPassword.value.password).subscribe(result => {
         if (result[0].register) {
           this.userService.setToken(result[0]._id);

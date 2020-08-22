@@ -8,5 +8,5 @@
       <input [formControl]="search" class="search mr-4" type="text" placeholder="Search...">
     </div>
   </div>
-  <app-list [list]="list" [query]="query"></app-list>
+  <app-list *ngIf="list.length" [list]="list" [query]="query"></app-list>
 </div>

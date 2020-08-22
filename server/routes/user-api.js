@@ -6,6 +6,7 @@ const ObjectId = require('mongodb').ObjectID
 
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
+const { promise } = require('protractor');
 const BCRYPT_SALT_ROUNDS = 12;
 
 var db;
@@ -364,5 +365,78 @@ router.route('/admin/promote/:_id').put((req, res) => {
         res.send({'demote': true});
     })
 })
+
+router.get('/dashboard/nextup/:_id', (req, res) => {
+    db.collection('users').findOne({_id: ObjectId(req.params._id)}, (err, result) => {
+        if (err) return console.log(err);
+        if (result && result.watched) {
+            let promises = [];
+            for (tv of result.watched) {
+                if (tv.type === 'tv') promises.push(axios.get(`https://api.themoviedb.org/3/tv/${tv.id}?api_key=ef0b54d540e68c2dd4a0ff428b46161c&language=en-US`))
+            }
+            Promise.allSettled(promises)
+            .then(result2 => {
+                res.status(200).send(result2.filter(promiseResult => promiseResult.status === 'fulfilled').map((item) => item.value.data));
+            })
+            .catch(err => {
+                res.status(200).send([]);
+            })
+        }
+        else res.send([]);
+    })
+})
+
+router.get('/dashboard/foryou/:_id', (req, res) => {
+    db.collection('users').findOne({_id: ObjectId(req.params._id)}, (err, result) => {
+        if (err) return console.log(err);
+        if (result && (result.watched || result.favourite)) {
+            let favourite = result.favourite ? result.favourite.slice(-10) : [];
+            let watched = result.watched ? result.watched.slice(-10) : [];
+
+            let foryou = [];
+            for (fav of favourite) foryou.push(100);
+            for (watch of watched) foryou.push(10);
+            
+            //get recommended items of most recent watched and favourite items
+            let items = favourite.concat(watched);
+            let promises = [];
+            for (let item of items) {
+                let url = `https://api.themoviedb.org/3/${item.type}/${item.id}/recommendations?api_key=ef0b54d540e68c2dd4a0ff428b46161c&language=en-US`;
+                promises.push(axios.get(url))
+            }
+            Promise.allSettled(promises)
+            .then(results => {
+                let result = results.filter(promiseResult => promiseResult.status === 'fulfilled').map(item => item.value.data);
+                let combined_results = [];
+
+                //assign a score and limit the recommendations for each item
+                for (let i=0; i < result.length; i++) {
+                    for (let item of result[i].results.slice(0, Math.floor(200/result.length))) {
+                        item.foryou = foryou[i];
+                        combined_results.push(item);
+                    }
+                }
+
+                //increase the score for items recommended more than once
+                let foryouItems = [];
+                let added = {};
+                for (let item of combined_results) {
+                    let occurrences = combined_results.filter(a => a.id == item.id && (a.title == item.title || a.name == item.name));
+                    item.foryou = occurrences.reduce((a,b) => a + b.foryou, 0)
+                    if (!added[item.id]) {
+                        foryouItems.push(item);
+                        added[item.id] = true;
+                    }
+                }
+                res.send(foryouItems.sort((a, b) => b.foryou - a.foryou))
+            })
+            .catch(err => {
+                res.send([]);
+            })
+        }
+        else res.send([]);
+    })
+})
+
 
 module.exports = router

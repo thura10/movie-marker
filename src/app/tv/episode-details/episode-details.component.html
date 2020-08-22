@@ -1,0 +1,28 @@
+<div *ngIf="episode" [ngStyle]= "{'backgroundImage': 'url('+ getBackdrop(episode) +')'}" id="bg"></div>
+<div *ngIf="episode" style="margin-top: 110px;" class="container text-white">
+  <div class="row justify-content-between mb-5">
+    <div class="col-lg-5 col-12 mt-1 pr-0 d-flex flex-column order-first mb-4 mb-lg-1">
+      <img id="episode-poster" src="{{getPoster(episode.still_path)}}">
+    </div>
+    <div style="font-size: 0.9rem; margin-top: 2rem;" class="col-lg-7 col-12 text-white order-lg-2 order-3 mt-4 mt-lg-1">
+      <span [routerLink]="['/tv', id]" style="font-size: 1.7rem; font-weight: 500;" class="text-nowrap cursor-pointer">{{name}}</span>
+      <h3 style="font-size: 1.3rem; font-weight: 400;" class="text-nowrap mt-2">S{{episode.season_number}} E{{episode.episode_number}}: {{episode.name}}</h3>
+      <p *ngIf="episode.air_date" style="font-size: 1.1rem;" class="mt-3">Air Date: {{formatDate(episode.air_date)}}</p>
+      <p *ngIf="episode.overview" style="font-size: 1rem;" class="mt-3">{{episode.overview}}</p>
+    </div>
+  </div>
+
+  <div *ngIf="episode && (episode.videos.results.length || episode.images.stills.length > 1)" class="row mb-4 mt-lg-5">
+    <app-carousel class="w-100" [videos]= "episode.videos.results" [images]= "episode.images.stills"></app-carousel>
+  </div>
+
+  <div *ngIf="episode.guest_stars && episode.guest_stars.length" class="row mt-5">
+    <div class="col-12">
+      <h3 class="font-code">Guest Stars</h3>
+      <div class="overflow-x-auto d-flex flex-nowrap flex-row w-100">
+        <div *ngFor="let actor of episode.guest_stars">
+          <app-actor-item [actor]="actor" [small]="true"></app-actor-item>
+        </div>
+      </div>
+    </div>
+  </div>

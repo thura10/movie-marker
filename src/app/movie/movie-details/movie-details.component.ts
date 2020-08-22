@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TmdbService } from '../../tmdb.service';
 import { UiService } from "../../ui.service";
 import { UserService } from 'src/app/user.service';
@@ -21,7 +21,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   isWatched: boolean;
   isFavourite: boolean;
 
-  constructor(private route: ActivatedRoute, private tmdb: TmdbService, private ui: UiService, private userService: UserService) { }
+  constructor(private route: ActivatedRoute, private tmdb: TmdbService, private ui: UiService, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -36,6 +36,8 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
           })
         }
         this.ui.stopSpinner();
+      }, err => {
+        this.router.navigateByUrl('/')
       })
     })
   }
@@ -77,6 +79,11 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       return crew.job === "Director"
     })
     return directors
+  }
+  formatDate(date: string) {
+    const dates = date.split('-');
+    const months = ["January","February","March","April","May","June","July", "August","September","October","November","December"];
+    return `${dates[2]} ${months[parseInt(dates[1])-1]} ${dates[0]}`
   }
 
   dataChanged(event) {

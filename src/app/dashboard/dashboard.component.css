@@ -113,3 +113,7 @@
     font-size: 0.9rem;
     padding-right: 1rem;
 }
+
+.text-no-items {
+    font-weight: 350;
+}

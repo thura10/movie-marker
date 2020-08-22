@@ -57,4 +57,8 @@ export class TmdbService {
   getRandomPoster() {
     return this.http.get<any>(`./api/tmdb/discover/poster`);
   }
+
+  getEpisodeDetails(id: number, season: number, episode: number) {
+    return this.http.get<any>(`./api/tmdb/tv/${id}/season/${season}/episode/${episode}`)
+  }
 }

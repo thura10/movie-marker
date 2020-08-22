@@ -215,6 +215,19 @@ router.route('/discover/poster').get((req, res) => {
     })
 })
 
+router.route('/tv/:id/season/:season/episode/:episode').get((req, res) => {
+    let str = addPathToUrl(base_url, ['tv', req.params.id, 'season', req.params.season, 'episode', req.params.episode]);
+    let params = setParams({"append_to_response": "videos,images", "include_image_language": "en,null"}).toString();
+
+    axios.get(`${str}?${params}`)
+    .then(result => {
+        res.send(result.data)
+    })
+    .catch(err => {
+        res.status(500).send(err);
+    })
+})
+
 
 function setParams(obj) {
     const params = new URLSearchParams();

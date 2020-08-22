@@ -3,7 +3,6 @@ html, body {
     background-color: #202020 !important;
     overflow-x: hidden;
     scroll-behavior: smooth;
-    height: 100%;
 }
 body { 
     margin: 0; 

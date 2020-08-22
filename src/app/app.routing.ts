@@ -13,19 +13,24 @@ import { GenreComponent } from './common/genre/genre.component';
 import { DiscoverListComponent } from './discover/discover-list/discover-list.component';
 import { AuthGuard } from './auth.guard';
 import { AdminComponent } from './admin/admin.component';
+import { EpisodeDetailsComponent } from './tv/episode-details/episode-details.component';
+import { DashboardListComponent } from './dashboard/dashboard-list/dashboard-list.component';
 
 const appRoutes: Routes = [
     {path: 'calendar', component: CalendarComponent},
-    {path: 'collections', component: CollectionsComponent, canActivate: [AuthGuard], data: {permission: {only: ['user', 'admin']}}},
+    {path: 'collections', component: CollectionsComponent, canActivate: [AuthGuard], data: {permission: ['user', 'admin']}},
     {path: 'discover', component: DiscoverComponent},
     {path: 'movie/:id', component: MovieDetailsComponent},
     {path: 'tv/:id', component: TvDetailsComponent},
+    {path: 'tv/:id/:name/:season/:episode', component: EpisodeDetailsComponent},
     {path: 'collections/:id', component: CollectionDetailsComponent, canActivate: [AuthGuard], data: {permission: ['user', 'admin']}},
     {path: 'actor/:id', component: ActorDetailsComponent},
     {path: 'genre/:type/:id', component: GenreComponent},
     {path: 'discover/:type/:id', component: DiscoverListComponent},
     {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: {permission: ['admin']}},
-    {path: '', component: DashboardComponent, pathMatch: 'full'},
+    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+    {path: 'dashboard', component: DashboardComponent},
+    {path: 'dashboard/:id', component: DashboardListComponent}
 ]
 
 export const routing:ModuleWithProviders = RouterModule.forRoot(appRoutes, {scrollPositionRestoration: 'enabled'})

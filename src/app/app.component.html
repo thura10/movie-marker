@@ -8,7 +8,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngbCollapse]="isCollapsed">
     <ul class="nav navbar-nav ml-2 mr-auto">
-      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true" routerLink="/" routerLinkActive="activeNavItem" [routerLinkActiveOptions]="{exact:true}">
+      <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true" routerLink="/dashboard" routerLinkActive="activeNavItem">
           <img class="navIcon no-select" src="../assets/nav-dashboard-icon.png">Dashboard
         </a></li> 
       <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true; collectionRoute(loginModal)" routerLink="/collections" routerLinkActive="activeNavItem">
@@ -121,7 +121,7 @@
       <div class="form-group">
         <input style="background-image: url('../assets/form-password-icon.png');" formControlName="password1" type="password" class="form-control color-bg-primary text-white" placeholder="Confirm Password">
         <div *ngIf="registerPassword.invalid && registerSubmitted">
-          <span *ngIf="registerPassword.errors.notSame" style="font-size: small;" class="color-primary">Enter the same password</span>
+          <span *ngIf="registerPassword.errors && registerPassword.errors.notSame" style="font-size: small;" class="color-primary">Enter the same password</span>
         </div>
         <div *ngIf="registerError != ''">
           <span style="font-size: small;" class="color-primary">{{registerError}}</span>

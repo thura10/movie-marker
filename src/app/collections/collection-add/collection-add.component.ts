@@ -46,7 +46,7 @@ export class CollectionAddComponent implements AfterViewInit, OnInit {
       return "https://image.tmdb.org/t/p/w500" + item.poster_path;
     }
     else {
-      return "../../assets/exampleCollection.jpg"
+      return "../../assets/exampleCollection.png"
     }
   }
 

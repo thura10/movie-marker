@@ -13,7 +13,7 @@
             <span *ngIf="i != movie.genres.length-1"> • </span>
           </span><br>
         </span>
-        <span *ngIf="movie.release_date">Released:<span class="text-white"> {{movie.release_date}}</span><br></span>
+        <span *ngIf="movie.release_date">Released:<span class="text-white"> {{formatDate(movie.release_date)}}</span><br></span>
         <span *ngIf="movie.runtime">Runtime:<span class="text-white"> {{movie.runtime}} min</span><br></span>
         <span *ngIf="movie.spoken_languages.length">Language:<span class="text-white"> {{getInfo(movie.spoken_languages)}}</span><br></span>
         <span *ngIf="movie.credits && getDirectors(movie.credits.crew).length">Director:<span class="text-white"> {{getInfo(getDirectors(movie.credits.crew))}}</span><br></span>
@@ -42,7 +42,7 @@
     </div>
   </div>
 
-  <div *ngIf="movie && (movie.videos.results.length || movie.images.backdrops.length)" class="row mb-4">
+  <div *ngIf="movie && (movie.videos.results.length || movie.images.backdrops.length > 1)" class="row mb-4">
     <app-carousel class="w-100" [videos]= "movie.videos.results" [images]= "movie.images.backdrops"></app-carousel>
   </div>
 

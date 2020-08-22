@@ -34,6 +34,8 @@ import { GenreComponent } from './common/genre/genre.component';
 import { LazyListComponent } from './common/lazy-list/lazy-list.component';
 import { DiscoverListComponent } from './discover/discover-list/discover-list.component';
 import { AdminComponent } from './admin/admin.component';
+import { EpisodeDetailsComponent } from './tv/episode-details/episode-details.component';
+import { DashboardListComponent } from './dashboard/dashboard-list/dashboard-list.component';
 
 @NgModule({
   entryComponents: [
@@ -64,6 +66,8 @@ import { AdminComponent } from './admin/admin.component';
     LazyListComponent,
     DiscoverListComponent,
     AdminComponent,
+    EpisodeDetailsComponent,
+    DashboardListComponent,
   ],
   imports: [
     BrowserModule,

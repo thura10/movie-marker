@@ -64,11 +64,11 @@
       </div>
       <h3 class="mt-3" *ngIf="selectedSeason !== null">{{season.name}}</h3>
       <div *ngIf="season && selectedSeason === season.season_number" [@inOutAnimation] class="overflow-x-auto d-flex mt-3 flex-nowrap flex-row w-100" scrollTo>
-        <div *ngFor="let episode of season.episodes" class="mr-4 cursor-pointer">
+        <div *ngFor="let episode of season.episodes" [routerLink]="['/tv', tv.id, tv.name, episode.season_number, episode.episode_number]" class="mr-4 cursor-pointer">
           <img class="episode-poster cursor-pointer" [src]="getPoster(episode.still_path)">
           <div class="text-nowrap episode-text">
             <p style="font-size: large ;" class="text-center mt-2 mb-0 text-nowrap episode-text">{{episode.name}}</p>
-            <p style="font-size: small;" class="text-white-50 text-center">{{episode.season_number}}x{{episode.episode_number}}</p>  
+            <p style="font-size: small;" class="text-white-50 text-center">S{{episode.season_number}} E{{episode.episode_number}}</p>  
           </div>
         </div>
       </div>

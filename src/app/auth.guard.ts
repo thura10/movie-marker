@@ -11,21 +11,25 @@ export class AuthGuard implements CanActivate {
 
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const permission = next.data['permission'];
-    if (!this.user.getToken()) {
-      return false;
-    }
-    else if (this.user.getToken() && permission.includes('user')) {
-      return true;
-    }
-    else {
-      return new Promise((resolve) => {
+    return new Promise((resolve) => {
+      if (!this.user.getToken()) {
+        this.router.navigateByUrl('/')
+        resolve(false);
+      }
+      else if (permission.includes('user')) {
+        resolve(true);
+      }
+      else {
         this.user.checkAdmin().subscribe(res => {
           if (res && res.admin) {
             resolve(true);
           }
-          resolve(false);
+          else {
+            this.router.navigateByUrl('/')
+            resolve(false);
+          }
         })
-      })
-    }
+      }
+    })
   }
 }
