@@ -44,7 +44,7 @@
   </div>
 </nav>
 
-<ngb-alert *ngIf="userService.getToken() && !verified && showAlert" (close)="showAlert = false;" [type]="'warning'" style="z-index: 1; width: 20%; position: absolute; top: 80px; right: 10px;">
+<ngb-alert *ngIf="userService.getToken() && !verified && showAlert" (close)="showAlert = false;" [type]="'warning'" style="z-index: 100; width: 20%; position: fixed; top: 80px; right: 10px;">
   <span class="cursor-pointer" (click)="openStaticModal(pinEnterModal)">Verify your email now</span>
 </ngb-alert>
 
