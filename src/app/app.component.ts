@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
 
   admin: boolean = false;
   verified: boolean;
-  showAlert: boolean = true;
+  showAlert: boolean;
 
   checkPasswords(group: FormGroup) { // here we have the 'passwords' group
       let pass = group.value.password;
@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
         this.userService.setSession(result[0].username);
         this.user = this.userService.getSession()
         this.verified = result[0].verify;
+        if (!this.verified) this.showAlert = true;
       }
       else {
         this.user = ''
