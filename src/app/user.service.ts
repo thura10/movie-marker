@@ -142,4 +142,20 @@ export class UserService {
   getForYou() {
     return this.http.get<any[]>(`./api/user/dashboard/foryou/${this.getToken()}`)
   }
+
+  sendVerificationEmail() {
+    return this.http.get<any>(`./api/user/auth/${this.getToken()}/verify`)
+  }
+  sendResetEmail(email: string) {
+    return this.http.get<any>(`./api/user/auth/${email}/reset`)
+  }
+  verifyPin(email: string, pin: number) {
+    return this.http.get<any>(`./api/user/auth/${email}/pin/${pin}`)
+  }
+  verifyEmail(pin: number) {
+    return this.http.get<any>(`./api/user/verify/${this.getToken()}/pin/${pin}`)
+  }
+  changePassword(email: string, pin: number, password: string) {
+    return this.http.post<any>(`./api/user/auth/${email}/pin/${pin}`, {password: password})
+  }
 }

@@ -79,3 +79,17 @@
 .dropdown-item:hover img {
     filter: brightness(0) saturate(100%) invert(34%) sepia(84%) saturate(538%) hue-rotate(312deg) brightness(105%) contrast(108%) !important;
 }
+
+#pin-input {
+    background-color: #303030;
+    font-size: 37px;
+    padding: 15px;
+    max-width: 100%;
+    color: white;
+    border-radius: 8px;
+    border: 0;
+    text-align: center;
+    letter-spacing: 15px;
+    padding-left: 30px;
+    margin-bottom: 1rem;
+}

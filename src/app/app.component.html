@@ -33,13 +33,20 @@
         <span class="d-inline d-lg-none d-xl-inline">{{user}}</span>
       </button>
       <div id="userDropdownMenu" [class.w-100] = "isCollapsed" ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
-        <a (click) = "onLogout()" class="dropdown-item text-white" ngbDropdownItem>
+        <a *ngIf="!verified" (click) = "openStaticModal(pinEnterModal)" class="dropdown-item text-white cursor-pointer" ngbDropdownItem>
+          <i class="fas fa-exclamation-circle navIcon"></i>Verify
+        </a>
+        <a (click) = "onLogout()" class="dropdown-item text-white cursor-pointer" ngbDropdownItem>
           <img class="navIcon no-select" src="../assets/nav-logout-icon.png" width="20">Logout
         </a>
       </div>
     </div>
   </div>
 </nav>
+
+<ngb-alert *ngIf="!verified && showAlert" (close)="showAlert = false;" [type]="'warning'" style="z-index: 1; width: 20%; position: absolute; top: 80px; right: 10px;">
+  <span class="cursor-pointer" (click)="openStaticModal(pinEnterModal)">Verify your email now</span>
+</ngb-alert>
 
 <ng-template #loginModal let-modal>
   <div class="modal-header d-flex flex-row justify-content-center color-bg-primary" style="border: none; background-image: url('../assets/dashboardBg.png'); background-size: cover;">
@@ -67,21 +74,15 @@
           <span style="font-size: small;" class="color-primary">{{loginError}}</span>
         </div>
       </div>
-
-      <div style="border: none;" class="modal-footer color-bg-primary">
-        <button type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="submit">Login</button>
-        <div class="mx-auto mt-2">
-          <button style="border: none; border-radius: 30px; background-color: #3b5998" class="cursor-pointer p-1 mr-2">
-            <img class="p-1 no-select" src="../assets/icon-fb.png" height="35">
-          </button>
-          <button style="border: none; border-radius: 30px;" class="cursor-pointer bg-white p-1 ml-2">
-            <img class="p-1 no-select" src="../assets/icon-google.png" height="35">
-          </button>
-        </div>
-        <hr class="bg-white mt-3 w-100">
-        <button (click)= "modal.close(); openModal(registerModal)" style="background-color: #202020; border: 2px solid white;" type="button" class="btn w-100 mt-3 text-white font-code form-button cursor-pointer" type="button">Register</button>
-      </div>
+      <span (click)= "modal.close(); openModal(sendEmailModal)" style="font-size: .9rem;" class="text-white-50 mb-3 ml-3 mx-auto cursor-pointer">Forgot Password?</span>
     </div>
+
+    <div style="border: none; padding: 0 2rem 2rem;" class="modal-footer color-bg-primary">
+      <button type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="submit">Login</button>
+      <hr class="bg-white w-100 mt-3 mb-2">
+      <button (click)= "modal.close(); openModal(registerModal)" style="background-color: #202020; border: 2px solid white;" type="button" class="btn w-100 mt-3 text-white font-code form-button cursor-pointer" type="button">Register</button>
+    </div>
+
   </form>
 </ng-template>
 
@@ -133,6 +134,74 @@
       <hr class="bg-white mt-3 w-100">
       <span style="font-size: small;" class="text-white-50">By clicking on register, you agree to the <u class="cursor-pointer">terms and conditions</u> of the website.</span>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #sendEmailModal let-modal>
+  <div class="modal-header d-flex flex-row justify-content-center color-bg-primary" style="border: none; background-image: url('../assets/dashboardBg.png'); background-size: cover;">
+    <img style="width: 19%; top: -10px; position: absolute;" src="../assets/logo.png">
+    <h3 style="margin-top: 18%; margin-right: -1rem;" class="color-primary font-code ml-auto">Movie Marker</h3>
+    <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div style="padding: 2rem; padding-bottom: 1rem;" class="modal-body color-bg-primary">
+    <div class="form-group">
+      <label style="font-size: .9rem;" class="text-white-50" for="pwResetEmail">Enter your email address to reset password</label>
+      <input [formControl]="pwResetEmail" style="background-image: url('../assets/form-user-icon.png');" type="text" class="form-control color-bg-primary text-white" id="pwResetEmail" placeholder="Email">
+    </div>
+    <p class="text-center text-white">A six digit code will be sent to your email</p>
+    <p *ngIf="pwResetEmailError" style="color: crimson" class="text-center">An account with the specified email does not exist</p>
+  </div>
+
+  <div style="border: none; padding: 0 2rem 2rem;" class="modal-footer color-bg-primary">
+    <button (click)="sendVerifyEmail(pinEnterModal); " type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="button">Send Email</button>
+  </div>
+</ng-template>
+
+<ng-template #pinEnterModal let-modal>
+  <div class="modal-header d-flex flex-row justify-content-center color-bg-primary" style="border: none; background-image: url('../assets/dashboardBg.png'); background-size: cover;">
+    <img style="width: 19%; top: -10px; position: absolute;" src="../assets/logo.png">
+    <h3 style="margin-top: 18%; margin-right: -1rem;" class="color-primary font-code ml-auto">Movie Marker</h3>
+    <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div style="padding: 2rem; padding-bottom: 1rem;" class="modal-body color-bg-primary">
+    <label style="font-size: 1rem;" class="text-white mb-3 text-center" for="pin-input">Enter the six-digit code sent to your email</label>
+    <input [formControl]="verificationPin" (keydown)="pinKeyDown($event)" id="pin-input" type="number" maxlength="6" max="6">
+    <p *ngIf="resendEmailShown" (click)="resendEmail()" class="text-white-50 mb-0 cursor-pointer">Resend Email</p>
+    <p *ngIf="verifyPinError" style="color: crimson" class="text-center mt-2 mb-0">Incorrect PIN</p>
+  </div>
+
+  <div style="border: none; padding: 2rem; padding-top: 1rem;" class="modal-footer color-bg-primary">
+    <button (click)="verifyPin(pwResetModal); " type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="button">Verify</button>
+  </div>
+</ng-template>
+
+<ng-template #pwResetModal let-modal>
+  <div class="modal-header d-flex flex-row justify-content-center color-bg-primary" style="border: none; background-image: url('../assets/dashboardBg.png'); background-size: cover;">
+    <img style="width: 19%; top: -10px; position: absolute;" src="../assets/logo.png">
+    <h3 style="margin-top: 18%; margin-right: -1rem;" class="color-primary font-code ml-auto">Movie Marker</h3>
+    <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div style="padding: 2rem; padding-top: 1rem;" class="modal-body color-bg-primary">
+    <div class="form-group mt-4">
+      <input [formControl]="changePw" style="background-image: url('../assets/form-password-icon.png');" type="password" class="form-control color-bg-primary text-white" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <input [formControl]="changePw2" style="background-image: url('../assets/form-password-icon.png');" type="password" class="form-control color-bg-primary text-white" placeholder="Confirm Password">
+    </div>
+    <p *ngIf="changePwError" style="color: crimson" class="text-center mt-2 mb-0">{{changePwError}}</p>
+  </div>
+
+  <div style="border: none; padding: 0 2rem 2rem;" class="modal-footer color-bg-primary">
+    <button (click)="changePassword(loginModal); " type="button" class="btn w-100 text-white font-code form-button cursor-pointer" type="button">Save Password</button>
   </div>
 </ng-template>
 

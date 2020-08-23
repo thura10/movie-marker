@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { NgbCollapseModule, NgbDropdownModule, NgbModalModule, NgbCarouselModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap'
+import { NgbCollapseModule, NgbDropdownModule, NgbModalModule, NgbCarouselModule, NgbPaginationModule, NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap'
 
 import {routing} from './app.routing'
 import {TmdbService} from './tmdb.service'
@@ -73,11 +73,11 @@ import { DashboardListComponent } from './dashboard/dashboard-list/dashboard-lis
     BrowserModule,
     NgbCollapseModule,
     NgbDropdownModule,
+    NgbAlertModule,
     NgbModalModule,
     NgbCarouselModule,
     ReactiveFormsModule,
     NgbPaginationModule,
-    NgbDropdownModule,
     HttpModule,
     HttpClientModule,
     routing,

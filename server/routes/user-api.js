@@ -6,7 +6,7 @@ const ObjectId = require('mongodb').ObjectID
 
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
-const { promise } = require('protractor');
+const nodemailer = require('nodemailer');
 const BCRYPT_SALT_ROUNDS = 12;
 
 var db;
@@ -44,7 +44,7 @@ router.route('/auth').post((req, res) => {
     db.collection('users').findOne({"_id": ObjectId(_id)}, function(err, result) {
         if (err) return console.log(err);
         if (result) {
-            res.send([{"auth": true, "username": result.username}]);
+            res.send([{"auth": true, "username": result.username, verify: result.verify}]);
             return
         }
         res.send([{"auth": false}]);
@@ -80,7 +80,7 @@ router.route('/register').post(function(req, res) {
             }
             bcrypt.hash(password, BCRYPT_SALT_ROUNDS, function(err, hash) {
                 db.collection('users').insertOne(
-                    {"username": username, "email": email, "password": hash},
+                    {"username": username, "email": email, "password": hash, "verify": false},
                     (err, result) => {
                         if (err) return console.log(err);
                         let id = 0;
@@ -390,8 +390,8 @@ router.get('/dashboard/foryou/:_id', (req, res) => {
     db.collection('users').findOne({_id: ObjectId(req.params._id)}, (err, result) => {
         if (err) return console.log(err);
         if (result && (result.watched || result.favourite)) {
-            let favourite = result.favourite ? result.favourite.slice(-10) : [];
-            let watched = result.watched ? result.watched.slice(-10) : [];
+            let favourite = result.favourite ? result.favourite.slice(-50) : [];
+            let watched = result.watched ? result.watched.slice(-50) : [];
 
             let foryou = [];
             for (fav of favourite) foryou.push(100);
@@ -437,6 +437,107 @@ router.get('/dashboard/foryou/:_id', (req, res) => {
         else res.send([]);
     })
 })
+//send email to reset pw
+router.route('/auth/:email/reset').get((req, res) => {
+    db.collection('users').findOne({email: req.params.email}, (err, result) => {
+        if (err) return console.log(err);
+        if (result) {
+            let pin = sendEmail(req.params.email, result.username, "Reset your password");
+            db.collection('users').updateOne({email: req.params.email}, {$set: {pin: pin}}, (err, result) => {
+                if (err) return console.log(err);
+                res.send({email: true});
+            })
+        }
+        else {
+            res.send({email: false});
+        }
+    })
+})
+//send email to verify account
+router.route('/auth/:_id/verify').get((req, res) => {
+    db.collection('users').findOne({_id: ObjectId(req.params._id)}, (err, result) => {
+        if (err) return console.log(err);
+        if (result) {
+            let pin = sendEmail(result.email, result.username , "Verify your email");
+            db.collection('users').updateOne({_id: ObjectId(req.params._id)}, {$set: {pin: pin}}, (err, result) => {
+                if (err) return console.log(err);
+                res.send({email: true});
+            })
+        }
+        else {
+            res.send({email: false});
+        }
+    })
+})
+router.route('/auth/:email/pin/:pin').get((req, res) => {
+    db.collection('users').findOne({email: req.params.email}, (err, result) => {
+        if (err) return console.log(err);
+        if (result && result.pin && result.pin == req.params.pin) {
+            db.collection('users').updateOne({email: req.params.email}, {$set: {verify: true}}, (err, result2) => {
+                if (err) return console.log(err);
+                res.send({verify: true})
+            })
+        }
+        else res.send({verify: false})
+    })
+})
+router.route('/verify/:id/pin/:pin').get((req, res) => {
+    db.collection('users').findOne({_id: ObjectId(req.params.id)}, (err, result) => {
+        if (err) return console.log(err);
+        if (result && result.pin && result.pin == req.params.pin) {
+            db.collection('users').updateOne({_id: ObjectId(req.params.id)}, {$set: {verify: true}}, (err, result2) => {
+                if (err) return console.log(err);
+                res.send({verify: true})
+            })
+        }
+        else res.send({verify: false})
+    })
+})
+router.route('/auth/:email/pin/:pin/').post((req, res) => {
+    db.collection('users').findOne({email: req.params.email}, (err, result) => {
+        if (err) return console.log(err);
+        if (result && result.pin && result.pin == req.params.pin) {
+            bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS, function(err, hash) {
+                db.collection('users').updateOne({email: req.params.email}, {$set: {password: hash}}, (err, result2) => {
+                    if (err) return console.log(err);
+                    res.send({change: true})
+                })
+            })
+        }
+        else {
+            res.send({change: false})
+        }
+    })
+})
 
+
+function sendEmail(email, username, reason) {
+    let pin = Math.floor(100000 + Math.random() * 900000);
+
+    var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'dineandwhine.contact@gmail.com',
+          pass: 'wyjzu6-biwquC-mazpyq'
+        }
+    });
+      
+    var mailOptions = {
+        from: 'dineandwhine.contact@gmail.com',
+        to: email,
+        subject: `${reason} for Movie Marker`,
+        text: `Hello ${username}, The pin to ${reason.toLowerCase()} is ${pin}.`
+    };
+      
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } 
+        else {
+          console.log('Email sent: ' + info.response);
+        }
+    });
+    return pin;
+}
 
 module.exports = router
