@@ -12,9 +12,12 @@ const BCRYPT_SALT_ROUNDS = 12;
 var db;
 
 const url = process.env.MONGO_URI;
-MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err, database) => {
-    if (err) return console.log(err)
-    db = database.db('movieMarker')
+MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
+.then((database) => {
+  db = database.db('movieMarker');
+})
+.catch((err) => {
+  console.log(err)
 })
 
 router.post('/login', (req, res) => {
