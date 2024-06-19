@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const MongoClient = require('mongodb').MongoClient
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongodb').ObjectID
 
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
@@ -12,7 +12,7 @@ const BCRYPT_SALT_ROUNDS = 12;
 var db;
 
 const url = process.env.MONGO_URI;
-MongoClient.connect(url)
+MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((database) => {
   db = database.db('movieMarker');
 })
