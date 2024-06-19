@@ -3,7 +3,7 @@ const router = express.Router();
 
 const axios = require('axios');
 
-const API_KEY = "ef0b54d540e68c2dd4a0ff428b46161c";
+const API_KEY = process.env.TMDB_API;
 const base_url = "https://api.themoviedb.org/3";
 
 router.get('/search/:query', (req, res) => {
@@ -18,7 +18,7 @@ router.get('/search/:query', (req, res) => {
     })
     .catch(error => {
         res.status(500).send(error)
-    }); 
+    });
 });
 router.get('/movie/:id', (req, res) => {
     let str = addPathToUrl(base_url, ["movie", req.params.id]);
@@ -128,7 +128,7 @@ router.get('/calendar/tv/:startDate/:endDate', (req, res) => {
             let str = addPathToUrl(base_url, ['tv', tv.id]);
             let params = setParams({}).toString();
             let url = `${str}?${params}`
-            
+
             promises.push(axios.get(url))
         }
         Promise.all(promises)

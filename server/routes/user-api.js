@@ -11,7 +11,7 @@ const BCRYPT_SALT_ROUNDS = 12;
 
 var db;
 
-const url = "mongodb+srv://test1:testone1@cluster0.dasrw.mongodb.net/test?retryWrites=true&w=majority"
+const url = process.env.MONGO_URI;
 MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true}, (err, database) => {
     if (err) return console.log(err)
     db = database.db('movieMarker')
@@ -396,7 +396,7 @@ router.get('/dashboard/foryou/:_id', (req, res) => {
             let foryou = [];
             for (fav of favourite) foryou.push(100);
             for (watch of watched) foryou.push(10);
-            
+
             //get recommended items of most recent watched and favourite items
             let items = favourite.concat(watched);
             let promises = [];
@@ -521,18 +521,18 @@ function sendEmail(email, username, reason) {
           pass: 'wyjzu6-biwquC-mazpyq'
         }
     });
-      
+
     var mailOptions = {
         from: 'dineandwhine.contact@gmail.com',
         to: email,
         subject: `${reason} for Movie Marker`,
         text: `Hello ${username}, The pin to ${reason.toLowerCase()} is ${pin}.`
     };
-      
+
     transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
-        } 
+        }
         else {
           console.log('Email sent: ' + info.response);
         }

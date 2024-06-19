@@ -1,6 +1,6 @@
 # MovieMarker
 
-MongoURI exposed. Frontend stores login session info in local/session storage, which can easily be modified to be logged in as another user.
+Naive insecure auth: Frontend stores login session info in local/session storage, which can easily be modified to be logged in as another user.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.0.
 
