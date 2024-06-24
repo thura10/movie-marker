@@ -199,4 +199,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       this.ui.stopSpinner();
     })
   }
+
+  getToken() {
+    return this.userService.getToken();
+  }
 }

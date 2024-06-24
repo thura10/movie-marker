@@ -1,11 +1,11 @@
-<div [class.bgCollapsed] = "searching || !userService.getToken()" class="d-flex flex-column" id="bg">
+<div [class.bgCollapsed] = "searching || !getToken()" class="d-flex flex-column" id="bg">
   <div class="mb-5" style="margin-top: 125px; width: 100%; z-index: 2;">
     <div id="searchBar" (click)="searchFocus()">
       <img style="height: 1.4rem;" class="ml-1 no-select" src="../../assets/search-icon.png">
       <input #searchText id="searchText" class="font-code text-white ml-md-5" type="text" placeholder="SEARCH">
     </div>
   </div>
-  <div #overviewItems *ngIf="!searching && userService.getToken()" id="overview" class="d-flex">
+  <div #overviewItems *ngIf="!searching && getToken()" id="overview" class="d-flex">
     <h2 *ngIf="overviewIndex != 0" style="left: 0;" class="mh-100 m-auto text-white cursor-pointer arrow-pointers" (click) = "scrollOverviewPrev(overviewItems)">&nbsp;&nbsp;&lt;</h2>
     <div class="p-5 text-white m-auto d-inline-block w-100">
       <div class="overviewItem">
@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<div *ngIf="!searching && userService.getToken()" class="pb-1 px-md-5 pt-5 pr-2 pl-4">
+<div *ngIf="!searching && getToken()" class="pb-1 px-md-5 pt-5 pr-2 pl-4">
   <p [routerLink]="['/dashboard/foryou']" routerLinkActive="router-link-active"  style="font-size: x-large" class="font-code text-white cursor-pointer">
     <img src="../../assets/movieItem-favourite.svg" width="22" class="mr-4 no-select">For You
   </p>
@@ -53,7 +53,7 @@
   </div>
 </div>
 
-<div *ngIf="!searching && userService.getToken()" class="pb-3 px-md-5 pt-2 pr-2 pl-4">
+<div *ngIf="!searching && getToken()" class="pb-3 px-md-5 pt-2 pr-2 pl-4">
   <p [routerLink]="['/dashboard/nextup']" style="font-size: x-large" class="font-code text-white cursor-pointer">
     <img src="../../assets/tv_icon.png" width="25" class="mr-4 no-select">Next up
   </p>
@@ -65,7 +65,7 @@
   </div>
 </div>
 
-<h5 *ngIf="!searching && !userService.getToken()" class="text-center text-white mt-5 text-no-items">Sign in to get personalised recommendations and track shows</h5>
+<h5 *ngIf="!searching && !getToken()" class="text-center text-white mt-5 text-no-items">Sign in to get personalised recommendations and track shows</h5>
 
 <!--SEARCH RESULT HERE-->
 <div style="background-color: #202020;" *ngIf="searching">

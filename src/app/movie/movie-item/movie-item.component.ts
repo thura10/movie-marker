@@ -47,7 +47,7 @@ export class MovieItemComponent implements OnChanges {
   addWatched() {
     if (this.isWatched) {
       this.userService.removeWatchedItem('movie', this.movie.id).subscribe(res => {
-        this.changed.emit('watched');    
+        this.changed.emit('watched');
       })
       this.isWatched = false;
     }
@@ -61,7 +61,7 @@ export class MovieItemComponent implements OnChanges {
   addFavourite() {
     if (this.isFavourite) {
       this.userService.removeFavouriteItem('movie', this.movie.id).subscribe(res => {
-        this.changed.emit('favourite');    
+        this.changed.emit('favourite');
       })
       this.isFavourite = false;
     }
@@ -71,5 +71,9 @@ export class MovieItemComponent implements OnChanges {
       })
       this.isFavourite = true;
     }
+  }
+
+  getToken() {
+    return this.userService.getToken();
   }
 }

@@ -10,13 +10,13 @@
     <ul class="nav navbar-nav ml-2 mr-auto">
       <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true" routerLink="/dashboard" routerLinkActive="activeNavItem">
           <img class="navIcon no-select" src="../assets/nav-dashboard-icon.png">Dashboard
-        </a></li> 
+        </a></li>
       <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true; collectionRoute(loginModal)" routerLink="/collections" routerLinkActive="activeNavItem">
         <img class="navIcon no-select" src="../assets/nav-collection-icon.png">Collections
       </a></li>
       <li><a [class.navItemExpanded]="!isCollapsed" class="nav-link navItem active font-code" (click)="isCollapsed = true" routerLink="/calendar" routerLinkActive="activeNavItem">
         <img class="navIcon no-select" src="../assets/nav-calendar-icon.png">Calendar
-      </a></li> 
+      </a></li>
       <li><a [class.navItemExpanded]="!isCollapsed" class="navItem nav-link active font-code ml-1" (click)="isCollapsed = true" routerLink="/discover" routerLinkActive="activeNavItem">
         <img class="navIcon no-select" src="../assets/nav-discover-icon.png">Discover
       </a></li>
@@ -44,7 +44,7 @@
   </div>
 </nav>
 
-<ngb-alert *ngIf="userService.getToken() && !verified && showAlert" (close)="showAlert = false;" [type]="'warning'" style="z-index: 100; width: 20%; position: fixed; top: 80px; right: 10px;">
+<ngb-alert *ngIf="getToken() && !verified && showAlert" (close)="showAlert = false;" [type]="'warning'" style="z-index: 100; width: 20%; position: fixed; top: 80px; right: 10px;">
   <span class="cursor-pointer" (click)="openStaticModal(pinEnterModal)">Verify your email now</span>
 </ngb-alert>
 

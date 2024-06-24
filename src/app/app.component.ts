@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
       let pass = group.value.password;
       let confirmPass = group.value.password1;
 
-      return pass === confirmPass ? null : { notSame: true }     
+      return pass === confirmPass ? null : { notSame: true }
   }
 
   ngOnInit() {
@@ -239,6 +239,10 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       this.resendEmailShown = true;
     }, 30000);
+  }
+
+  getToken() {
+    return this.userService.getToken();
   }
 
 }

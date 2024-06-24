@@ -48,7 +48,7 @@ export class TvItemComponent implements OnChanges {
   addWatched() {
     if (this.isWatched) {
       this.userService.removeWatchedItem('tv', this.tv.id).subscribe(res => {
-          this.changed.emit('watched');    
+          this.changed.emit('watched');
       })
       this.isWatched = false;
     }
@@ -62,7 +62,7 @@ export class TvItemComponent implements OnChanges {
   addFavourite() {
     if (this.isFavourite) {
       this.userService.removeFavouriteItem('tv', this.tv.id).subscribe(res => {
-          this.changed.emit('favourite');    
+          this.changed.emit('favourite');
       })
       this.isFavourite = false;
     }
@@ -81,5 +81,9 @@ export class TvItemComponent implements OnChanges {
     else if (this.calendar == 'last') {
       this.router.navigate(['/tv', this.tv.id, this.tv.name, this.tv.last_episode_to_air.season_number, this.tv.last_episode_to_air.episode_number])
     }
+  }
+
+  getToken() {
+    return this.userService.getToken();
   }
 }
