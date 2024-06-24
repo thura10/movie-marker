@@ -4,8 +4,8 @@ const path = require('path');
 const http = require('http')
 const bodyparser = require('body-parser')
 
-const userApi = require('./server/routes/user-api');
-const tmdbApi = require('./server/routes/tmdb-api');
+const userApi = require('./routes/user-api');
+const tmdbApi = require('./routes/tmdb-api');
 const app = express()
 
 app.use(bodyparser.json())
