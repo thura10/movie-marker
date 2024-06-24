@@ -11,7 +11,7 @@ const BCRYPT_SALT_ROUNDS = 12;
 
 var db;
 
-const url = process.env.MONGO_URI;
+const url = `mongodb://${MONGO_USER}:${MONGO_PW}@${MONGO_HOST}?retryWrites=true&w=majority`;
 MongoClient.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 .then((database) => {
   db = database.db('movieMarker');
