@@ -14,4 +14,6 @@ COPY --from=build-env /app/server .
 # Install dependencies
 RUN npm install
 CMD ["node", "server.js"]
+
+ENV PORT=3000
 EXPOSE 3000
