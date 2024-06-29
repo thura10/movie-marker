@@ -12,7 +12,6 @@ services:
       proxy: {}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.movie-marker.entrypoints=websecure"
       - "traefik.http.routers.movie-marker.rule=HostRegexp(`^movie-marker\\..+$`)"
       - "traefik.http.services.movie-marker.loadbalancer.server.port=3000"
 
