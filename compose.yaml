@@ -1,16 +1,24 @@
 services:
   app:
     build: .
-    ports:
-      - ${PORT:-4000}:3000
     environment:
       MONGO_USER: root
       MONGO_PW: secret
       MONGO_HOST: mongo
       TMDB_API: ${TMDB_API:?error}
+      PORT: 3000
     networks:
-      db-mongo: {}
+      db.mongo: {}
+      proxy: {}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.movie-marker.entrypoints=websecure"
+      - "traefik.http.routers.movie-marker.rule=HostRegexp(`^movie-marker\\..+$`)"
+      - "traefik.http.services.movie-marker.loadbalancer.server.port=3000"
 
 networks:
-  db-mongo:
+  db.mongo:
+    external: true
+  # Network for the app to communiate with the reverse proxy
+  proxy:
     external: true
